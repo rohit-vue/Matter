@@ -1,0 +1,44 @@
+// Write your overrides
+
+// AUTHENTICATION
+.my-component {
+  .myBtn {
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .text-field {
+    &:focus {
+      border-bottom: #007bff; // Change the border color to blue when focused
+    }
+  }
+  
+  .myBtn:hover {
+    background-color: #6a6b6c;
+  }
+}
+
+.my-container {
+  display: flex; 
+  margin-top: 8rem;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+// account-sidebar
+
+.sidebar-header {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.sidebar-container {
+  // display: relative;
+  display: fixed;
+  // margin-left: 10rem;
+}
