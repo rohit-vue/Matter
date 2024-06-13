@@ -12,7 +12,7 @@ const route = useRoute()
 const form = ref({
   email: '',
   password: '',
-  remember: true,
+  remember: false,
 })
 
 const isPasswordVisible = ref(false)
@@ -24,11 +24,7 @@ async function handleLogin() {
     isLoading.value = true
     error.value = ''
 
-    if (!form.value.remember) {
-      error.value = 'You must accept the Remember me checkbox to proceed'
-      return
-    }
-
+    console.log(form.value.remember);
     const response = await fetch("http://localhost:8000/api/login", {
       method: "POST",
       headers: {
@@ -62,7 +58,7 @@ try {
         "Content-Type": "application/json",
       },
       // Optionally, you may need to send additional data along with the token
-      body: JSON.stringify({ token }),
+      // body: JSON.stringify({  }),
     });
 
     if (response.ok) {
@@ -148,11 +144,10 @@ definePageMeta({
                       Forget Password?
                     </NuxtLink>
                   </div>
-
-                  <p v-if="error" style="color: red">{{ error }}</p>
                   <button class="myBtn" type="submit">
                     Login
                   </button>
+              
                 </VCol>
 
                 <!-- create account -->
