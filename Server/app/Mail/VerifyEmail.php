@@ -20,7 +20,7 @@ class VerifyEmail extends Mailable
 
     public function build()
     {
-        $verificationUrl = url('http://localhost:3000/login?token=' . $this->user->remember_token);
+        $verificationUrl = url('http://localhost:3000/login?token=' . $this->user->verification_token);
 
         return $this->view('email.verify-email')
                     ->with([

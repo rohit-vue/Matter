@@ -485,7 +485,7 @@
                                                             cellpadding="0" role="presentation">
                                                             <tr>
                                                                 <td align="center">
-                                                                    <a href="http://localhost:9000/reset-password/{{ $token }}"
+                                                                    <a href="http://localhost:3000/reset-password/{{ $token }}"
                                                                         class="f-fallback button button--green"
                                                                         target="_blank">Reset your password</a>
                                                                 </td>
@@ -509,7 +509,7 @@
                                                             button above, copy and paste the URL below into your web
                                                             browser.</p>
                                                         <p class="f-fallback sub"><a style="text-decoration: none"
-                                                                href="http://localhost:9000/reset-password/{{ $token }}">http://localhost:9000/reset-password/{{ $token }}</a>
+                                                                href="http://localhost:3000/reset-password?token=++{{ $token }}">http://localhost:3000/reset-password/{{ $token }}</a>
                                                         </p>
                                                     </td>
                                                 </tr>

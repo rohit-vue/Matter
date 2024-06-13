@@ -34,12 +34,13 @@ class UserController extends Controller
             'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            // 'password' => $request->password,
             'email_verified_at' => null,
         ]);
 
         //* Generate a verification token and save it to the user model
         $verificationToken = Str::random(60);
-        $user->remember_token = $verificationToken;
+        $user->verification_token = $verificationToken;
         $user->save();
 
         //* Send the verification email
@@ -58,33 +59,35 @@ class UserController extends Controller
             "email" => "required|email|max:60",
             "password" => "required|string|min:3"
         ]);
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Invalid email or password.'
             ], 401);
         }
-        if (!$token = auth()->attempt($validator->validated())) {         //* NEW TOKEN CREATING
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Unauthorised'
+                'message' => 'Invalid email or password.'
             ], 401);
         }
-        $user = auth()->user();
-        unset($user->password);
+
+        // Generate a token
+        $token = Str::random(60);
+        $user->remember_token = hash('sha256', $token);
+        $user->save();
+
         return response()->json([
             'status' => 'success',
             'access_token' => $token,
-            'user' => $user,
             'message' => 'Logged user data'
         ]);
     }
 
-    //TODO: Refreshing the token
-    // public function refresh()
-    // {
-    //     return $this->respondwithToken(auth()->refresh());
-    // }
 
     //TODO: invalidate the current token and unset the authenticated user.
     public function logout()
@@ -95,11 +98,11 @@ class UserController extends Controller
 
     public function verifyEmail($token)
     {
-        $user = User::where('remember_token', $token)->firstOrFail();
+        $user = User::where('verification_token', $token)->firstOrFail();
 
         if ($user->email_verified_at == null) {
             $user->email_verified_at = now();
-            $user->remember_token = null;
+            $user->verification_token = null;
             $user->save();
 
             return response()->json([
