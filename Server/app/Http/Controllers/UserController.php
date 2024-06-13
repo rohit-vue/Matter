@@ -46,6 +46,16 @@ class UserController extends Controller
         //* Send the verification email
         Mail::to($user->email)->send(new VerifyEmail($user));
 
+        $token = Str::random(60);
+        $user->remember_token = hash('sha256', $token);
+        $user->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User created successfully',
+            'access_token' => $token,
+        ], 201);
+
         return response()->json([
             'status' => 'success',
             'message' => 'User created successfully',
