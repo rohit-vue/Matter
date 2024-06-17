@@ -14,27 +14,27 @@
             </VCol>
           </VRow>
           <VRow justify="space-between" align="center" class="mx-8">
-            <img src="@/assets/images/icons/brands/google.png" alt="Chat GPT" class="mr-2 integration-img" />
+            <img src="@/assets/images/icons/brands/google.png" alt="Chat GPT" class="mr-2" />
             <VCardText class="permission-header">Google</VCardText>
             <VSwitch></VSwitch>
           </VRow>
           <VRow justify="space-between" align="center" class="mx-8">
-            <img src="@/assets/images/icons/brands/slack.png" alt="Chat GPT" class="mr-2 integration-img" />
+            <img src="@/assets/images/icons/brands/slack.png" alt="Chat GPT" class="mr-2" />
             <VCardText class="permission-header">Midjourney</VCardText>
             <VSwitch></VSwitch>
           </VRow>
           <VRow justify="space-between" align="center" class="mx-8">
-            <img src="@/assets/images/icons/brands/github.png" alt="Chat GPT" class="mr-2 integration-img" />
+            <img src="@/assets/images/icons/brands/github.png" alt="Chat GPT" class="mr-2" />
             <VCardText class="permission-header">Chat GPT</VCardText>
             <VSwitch></VSwitch>
           </VRow>
           <VRow justify="space-between" align="center" class="mx-8">
-            <img src="@/assets/images/icons/brands/laravel.png" alt="Chat GPT" class="mr-2 integration-img" />
+            <img src="@/assets/images/icons/brands/laravel.png" alt="Chat GPT" class="mr-2" />
             <VCardText class="permission-header">Klaviyo</VCardText>
             <VSwitch></VSwitch>
           </VRow>
           <VRow justify="space-between" align="center" class="mx-8 mb-5">
-            <img src="@/assets/images/icons/brands/instagram.png" alt="Chat GPT" class="mr-2 integration-img" />
+            <img src="@/assets/images/icons/brands/instagram.png" alt="Chat GPT" class="mr-2" />
             <VCardText class="permission-header">Instagram</VCardText>
             <VSwitch></VSwitch>
           </VRow>
