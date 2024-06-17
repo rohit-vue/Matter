@@ -30,7 +30,7 @@
   height: 100%;
 }
 
-// account-sidebar
+// Account >> sidebar
 
 .sidebar-header {
   font-size: 20px;
@@ -38,13 +38,38 @@
 }
 
 .sidebar-container {
-  // display: relative;
-  display: fixed;
-  // margin-left: 10rem;
-  .v-list-item {
-    &.active {
-      background-color: #f0f0f0; /* Background color of active tab */
-      border-radius: 5px; /* Border radius for active tab */
-    }
+  position: fixed;
+  .vlist {
+    border-right: 1px;
+    border-radius: 5px;
   }
+}
+
+//Account >> user
+.custom-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 2rem;
+
+  .btn1 {
+    border-radius: 2rem;
+  }
+  .btn2 {
+    color: white;
+    background: #818080;
+    border-radius: 2rem;
+  }
+}  
+
+.permission-header {
+  font-weight: 400;
+  color: black;
+  font-size: 18px;
+}
+
+.btn3 {
+  background-color: #838383;
+  color: white;
 }

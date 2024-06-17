@@ -2,7 +2,6 @@
 import { useConfigStore } from '@core/stores/config'
 import { AppContentLayoutNav } from '@layouts/enums'
 import { switchToVerticalNavOnLtOverlayNavBreakpoint } from '@layouts/utils'
-import AccountSidebar from '@/components/AccountSidebar.vue';
 
 // by this you can prevent switching from vertical to horizontal 
 // const DefaultLayoutWithHorizontalNav = defineAsyncComponent(() => import('./components/DefaultLayoutWithHorizontalNav.vue'))
@@ -24,11 +23,7 @@ injectSkinClasses()
     v-bind="layoutAttrs"
     :is="configStore.appContentLayoutNav === AppContentLayoutNav.Vertical ? DefaultLayoutWithVerticalNav : ''"
   >
-    <div style="display: flex; flex-direction: row;">
-      <AccountSidebar />
       <slot />
-    </div>
-
   </Component>
 </template>
 

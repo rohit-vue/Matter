@@ -1,27 +1,21 @@
 <template>
   <v-container>
     <v-row justify="end">
-      <v-col cols="7">
+      <v-col cols="9">
         <v-card>
-          <v-card-title>Game Consoles</v-card-title>
-          <v-card-subtitle>
-            You will receive notification for the below selected items.
+          <v-card-title class="mt-3">Notifications</v-card-title>
+          <v-divider />
+          <v-card-subtitle class="mt-5 mb-5">
+            You will receive notifications for the selected items below.
           </v-card-subtitle>
-          <v-card-text>
-            <v-table :items-per-page="10" :items="consoles" :hide-default-footer="true">
-              <template v-slot:item="{ item }">
-                <tr>
-                  <td>{{ item.name }}</td>
-                  <td>{{ item.manufacturer }}</td>
-                  <td>{{ item.year }}</td>
-                  <td>{{ item.sales }}</td>
-                  <td>
-                    <v-checkbox v-model="item.exclusive" readonly></v-checkbox>
-                  </td>
-                </tr>
-              </template>
-            </v-table>
-          </v-card-text>
+          <v-data-table-virtual :items="items" :header="headers">
+            <template v-slot:item.EMAIL="{ item }">
+              <v-checkbox></v-checkbox>
+            </template>
+            <template v-slot:item.APP="{ item }">
+              <v-checkbox></v-checkbox>
+            </template>
+          </v-data-table-virtual>
         </v-card>
       </v-col>
     </v-row>
@@ -31,66 +25,37 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-interface Console {
-  name: string;
-  manufacturer: string;
-  year: number;
-  sales: string;
-  exclusive: boolean;
-}
-
-const consoles = ref<Console[]>([
+const items = ref([
   {
-    name: 'PlayStation 5',
-    manufacturer: 'Sony',
-    year: 2020,
-    sales: '10M',
-    exclusive: true,
+    TYPE: 'Product Updates fakjenfkjaenfkjnekajfnenwakofje',
+    EMAIL: 'Loxodonta africana',
+    APP: 'Herbivore',
   },
   {
-    name: 'Xbox Series X',
-    manufacturer: 'Microsoft',
-    year: 2020,
-    sales: '6.5M',
-    exclusive: false,
+    TYPE: 'Comments',
+    EMAIL: 'Loxodonta africana',
+    APP: 'Herbivore',
   },
   {
-    name: 'Nintendo Switch',
-    manufacturer: 'Nintendo',
-    year: 2017,
-    sales: '89M',
-    exclusive: true,
+    TYPE: 'Status Updates',
+    EMAIL: 'Loxodonta africana',
+    APP: 'Herbivore',
   },
-  {
-    name: 'PlayStation 4',
-    manufacturer: 'Sony',
-    year: 2013,
-    sales: '116M',
-    exclusive: true,
-  },
-  {
-    name: 'Xbox One',
-    manufacturer: 'Microsoft',
-    year: 2013,
-    sales: '50M',
-    exclusive: false,
-  },
-  {
-    name: 'Nintendo Wii',
-    manufacturer: 'Nintendo',
-    year: 2006,
-    sales: '101M',
-    exclusive: true,
-  },
+  // add more items as needed
 ]);
 
+const headers = [
+  { text: 'Type', value: 'TYPE', width: '15%'}, // adjust width as needed
+  { text: 'Email', value: 'EMAIL', align: 'start', sortable: false },
+  { text: 'App', value: 'APP', align: 'start', sortable: false },
+];
 definePageMeta({
   layout: "account",
 })
 </script>
 
 <style scoped lang="scss">
-.v-data-table {
-  width: 100%;
-}
+/* Add any custom styles here */
 </style>
+
+
