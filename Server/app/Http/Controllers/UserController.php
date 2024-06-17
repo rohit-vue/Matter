@@ -100,12 +100,16 @@ class UserController extends Controller
 
 
     //TODO: invalidate the current token and unset the authenticated user.
-    public function logout()
+    public function logout(Request $request)
     {
-        auth()->logout();
+        // dd($request);
+        $user = $request->user();
+        $user->remember_token = "hehehe";
+        $user->save();
+    
         return response()->json(['message' => 'User logged out']);
     }
-
+    
     public function verifyEmail($token)
     {
         $user = User::where('verification_token', $token)->firstOrFail();
