@@ -17,3 +17,15 @@ html {
   color: white;
   border-radius: 8px;
 }
+
+.sidebar-container {
+  // display: relative;
+  display: fixed;
+  // margin-left: 10rem;
+  .v-list-item {
+    &.active {
+      background-color: #f0f0f0; /* Background color of active tab */
+      border-radius: 5px; /* Border radius for active tab */
+    }
+  }
+}

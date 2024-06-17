@@ -2,39 +2,49 @@
 <!-- eslint-disable vue/html-self-closing -->
 <!-- eslint-disable vue/html-self-closing -->
 <script setup lang="ts">
-import AuthProvider from "@/views/pages/authentication/AuthProvider.vue";
 import { themeConfig } from "@themeConfig";
 
 import { VNodeRenderer } from "@layouts/components/VNodeRenderer";
 
 const router = useRouter()
+const route = useRoute()
+const isPasswordVisible = ref(false)
 
 const form = ref({
   newPassword: '',
   confirmPassword: ''
 })
 
-// async function handleEmail(email: string) {
-//   try {
-//     const response = await fetch("http://localhost:8000/api/send-reset-password-email", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//       body: JSON.stringify({email}),
-//     });
+async function handlePassword() {
+  try {
+    const token = route.query.token;
+    if(form.value.newPassword != form.value.confirmPassword){
+      console.log("password doesn't match with confirm password")
+      return 
+    }
+    if(token){
+      const response = await fetch(`http://localhost:8000/api/resetpass/${token}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({password: form.value.newPassword}),
+      });
+    
+      if(!response.ok){
+        throw new Error('Invalid email');
+      }else{
+        console.log("Password has been successfully changed!!")
+      }
 
-//     if(!response.ok){
-//       throw new Error('Invalid email');
-//     }
-
-//     router.push({
-//       name: "login"
-//     })
-//   } catch (e: any) {
-//     console.error(e);
-//   }
-// }
+      router.push({
+        name: "login"
+      })
+    }
+  } catch (e: any) {
+    console.error(e);
+  }
+}
 
 definePageMeta({
   layout: "blank",
@@ -69,7 +79,7 @@ definePageMeta({
           </VCardText>
 
           <VCardText>
-            <VForm @submit.prevent="">
+            <VForm @submit.prevent="handlePassword()">
               <VRow>
                 <!-- Password resetting -->
                 <VCol cols="12">

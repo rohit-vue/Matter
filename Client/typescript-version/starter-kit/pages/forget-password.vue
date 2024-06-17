@@ -14,7 +14,7 @@ const form = ref({
 
 async function handleEmail(email: string) {
   try {
-    const response = await fetch("http://localhost:8000/api/send-reset-password-email", {
+    const response = await fetch("http://localhost:8000/api/resetpass", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,11 +24,10 @@ async function handleEmail(email: string) {
 
     if(!response.ok){
       throw new Error('Invalid email');
+    }else{
+      console.log("mail sent successfully")
     }
 
-    router.push({
-      name: "reset-password"
-    })
   } catch (e: any) {
     console.error(e);
   }

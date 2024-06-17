@@ -31,10 +31,17 @@ async function handleFormSubmit() {
     }
 
     // Register the user
-    await useFetch("http://127.0.0.1:8000/api/register", {
+    const { data, error: fetchError } = await useFetch("http://127.0.0.1:8000/api/register", {
       method: "POST",
       body: form.value,
+      headers: { 'Content-Type': 'application/json' },
     });
+    
+    // if (fetchError) throw new Error(fetchError.message);
+
+    localStorage.setItem('userData', JSON.stringify(data.value));
+
+
 
     router.push({
       name: "verify-email",
