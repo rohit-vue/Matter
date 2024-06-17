@@ -44,7 +44,6 @@
   </VContainer>
 </template>
 <script lang="ts" setup>
-import { VImg } from 'vuetify/lib/components/index.mjs';
 
 
 definePageMeta({

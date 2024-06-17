@@ -43,6 +43,7 @@
                 label="Brand Name"
                 placeholder="Materio"
               />
+              <!-- <VIcon icon="ri-user-add-line" /> -->
               <button class="p-0 comp-btn1">
                 <img src="@/assets/images/icons/brands/Icon.png" alt="Chat GPT" class="" />
               </button>
@@ -64,14 +65,35 @@
             </VCol>
           </VRow>
           <VDivider class="mx-5 mt-2"/>
+          <VExpansionPanels variant="accordion" multiple>
+            <VExpansionPanel
+              v-for="(item, index) in dummyData"
+              :key="index"
+              :title="item.title"
+              :text="item.text"
+            ></VExpansionPanel>
+          </VExpansionPanels>
         </VCard>
-
       </VCol>
     </VRow>
   </VContainer>
 </template>
 <script lang="ts" setup>
-import { VCardSubtitle, VDivider } from 'vuetify/lib/components/index.mjs';
+
+const dummyData = [
+  {
+    title: 'Location 1',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+  },
+  {
+    title: 'Location 2',
+    text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+  },
+  {
+    title: 'Location 3',
+    text: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+  },
+];
 
 definePageMeta({
   layout: "account",
@@ -81,3 +103,44 @@ definePageMeta({
 <style lang="scss">
 @use "assets/styles/styles.scss";
 </style>
+
+
+
+
+
+<!-- <template>
+  <v-card>
+    <v-layout>
+      <v-navigation-drawer v-model="drawer" :rail="rail" permanent>
+        <v-list-item
+          prepend-avatar="https://randomuser.me/api/portraits/men/85.jpg"
+          title="John Leider"
+          nav
+        >
+          <template v-slot:append>
+            <v-btn
+              icon="mdi-chevron-left"
+              variant="text"
+              @click.stop="rail = !rail"
+            ></v-btn
+          ></template>
+        </v-list-item>
+      </v-navigation-drawer>
+      <v-main style="height: 250px"></v-main>
+    </v-layout>
+  </v-card>
+  <v-card>
+    <VCardTitle @click="rail = false">asdfasf</VCardTitle>
+  </v-card>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        drawer: true,
+        rail: true,
+      }
+    },
+  }
+</script> -->
