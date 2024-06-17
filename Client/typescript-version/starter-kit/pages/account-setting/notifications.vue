@@ -1,25 +1,25 @@
 <template>
-  <v-container>
-    <v-row justify="end">
-      <v-col cols="9">
-        <v-card>
-          <v-card-title class="mt-3">Notifications</v-card-title>
-          <v-divider />
-          <v-card-subtitle class="mt-5 mb-5">
+  <VContainer>
+    <VRow justify="end">
+      <VCol cols="9">
+        <VCard>
+          <VCardTitle class="mt-3">Notifications</VCardTitle>
+          <VDivider />
+          <VCardSubtitle class="mt-5 mb-5">
             You will receive notifications for the selected items below.
-          </v-card-subtitle>
-          <v-data-table-virtual :items="items" :header="headers">
+          </VCardSubtitle>
+          <VDataTableVirtual :items="items" :header="headers">
             <template v-slot:item.EMAIL="{ item }">
               <v-checkbox></v-checkbox>
             </template>
             <template v-slot:item.APP="{ item }">
               <v-checkbox></v-checkbox>
             </template>
-          </v-data-table-virtual>
-        </v-card>
-      </v-col>
-    </v-row>
-  </v-container>
+          </VDataTableVirtual>
+        </VCard>
+      </VCol>
+    </VRow>
+  </VContainer>
 </template>
 
 <script setup lang="ts">
@@ -27,7 +27,7 @@ import { ref } from 'vue';
 
 const items = ref([
   {
-    TYPE: 'Product Updates fakjenfkjaenfkjnekajfnenwakofje',
+    TYPE: 'Product Updates',
     EMAIL: 'Loxodonta africana',
     APP: 'Herbivore',
   },

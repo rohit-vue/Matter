@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import { useTheme } from 'vuetify'
-
-const { global } = useTheme()
 
 const authProviders = [
   {
@@ -34,6 +31,6 @@ const authProviders = [
     :icon="link.icon"
     variant="text"
     size="small"
-    :color="global.name.value === 'dark' ? link.colorInDark : link.color"
+    :color="link.color"
   />
 </template>
