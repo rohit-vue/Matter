@@ -57,5 +57,3 @@ definePageMeta({
 <style scoped lang="scss">
 /* Add any custom styles here */
 </style>
-
-
