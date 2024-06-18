@@ -45,7 +45,7 @@ const items = ref([
 ]);
 
 const headers = [
-  { text: 'Type', value: 'TYPE', width: '15%'}, // adjust width as needed
+  { text: 'Type', value: 'TYPE', width: '15%', sortable: false }, // adjust width as needed
   { text: 'Email', value: 'EMAIL', align: 'start', sortable: false },
   { text: 'App', value: 'APP', align: 'start', sortable: false },
 ];
