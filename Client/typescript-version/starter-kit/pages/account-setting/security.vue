@@ -1,4 +1,7 @@
 <script lang="ts" setup>
+const isPasswordVisible = ref(false)
+const isPasswordVisible2 = ref(false)
+
 const recentDevicesHeaders = [
   {
     title: 'BROWSER',
@@ -105,13 +108,13 @@ definePageMeta({
               >
                 <!-- 👉 new password -->
                 <VTextField
-                  v-model="newPassword"
-                  :type="isNewPasswordVisible ? 'text' : 'password'"
-                  :append-inner-icon="isNewPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
                   label="New Password"
-                  autocomplete="on"
                   placeholder="············"
-                  @click:append-inner="isNewPasswordVisible = !isNewPasswordVisible"
+                  :type="isPasswordVisible ? 'text' : 'password'"
+                  :append-inner-icon="
+                    isPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'
+                  "
+                  @click:append-inner="isPasswordVisible = !isPasswordVisible"
                 />
               </VCol>
 
@@ -121,13 +124,13 @@ definePageMeta({
               >
                 <!-- 👉 confirm password -->
                 <VTextField
-                  v-model="confirmPassword"
-                  :type="isConfirmPasswordVisible ? 'text' : 'password'"
-                  :append-inner-icon="isConfirmPasswordVisible ? 'ri-eye-off-line' : 'ri-eye-line'"
-                  autocomplete="on"
-                  label="Confirm New Password"
+                  label="Confirm Password"
                   placeholder="············"
-                  @click:append-inner="isConfirmPasswordVisible = !isConfirmPasswordVisible"
+                  :type="isPasswordVisible2 ? 'text' : 'password'"
+                  :append-inner-icon="
+                    isPasswordVisible2 ? 'ri-eye-off-line' : 'ri-eye-line'
+                  "
+                  @click:append-inner="isPasswordVisible2 = !isPasswordVisible2"
                 />
               </VCol>
             </VRow>
@@ -155,7 +158,6 @@ definePageMeta({
                 style="margin-left: -1rem"
                 class="mt-3"
                 autofocus
-                label="Email Address"
                 placeholder="johndoe@gmail.com"
               />
               <!-- <VIcon icon="ri-user-add-line" /> -->
