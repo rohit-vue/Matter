@@ -71,7 +71,7 @@ export default [
   },
   {
     title: 'Settings',
-    to: { name: 'second-page' },
+    to: { name: 'setting' },
     icon: { icon: 'ri-file-text-line' },
   },
 ]
