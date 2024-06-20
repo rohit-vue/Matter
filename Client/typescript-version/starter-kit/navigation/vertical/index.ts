@@ -71,7 +71,7 @@ export default [
   },
   {
     title: 'Settings',
-    to: { name: 'setting' },
+    to: { name: 'setting-tab', params: { tab: 'workflows' } },
     icon: { icon: 'ri-file-text-line' },
   },
 ]
