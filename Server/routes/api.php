@@ -17,6 +17,7 @@ Route::post('resetpass/{token}', [PasswordResetController::class, 'reset']);
 Route::group(['middleware' => 'api'], function ($routes) {
     Route::post('refresh', [AuthController::class, 'refresh'])->name('refresh');
     Route::post('logout', [UserController::class, 'logout'])->name('logout');
+    Route::post('update-profile', [UserController::class, 'updateProfile'])->name('update-profile');
 });
 
 //Settings->Webflow

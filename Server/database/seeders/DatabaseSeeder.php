@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 use App\Models\SettingsWorkflowTasks;
 use App\Models\SettingsWorkflowSeasons;
@@ -23,7 +24,7 @@ class DatabaseSeeder extends Seeder
             'last_name' => 'admin',
             'email' => 'admin@admin.com',
             'phone' => '0000000000',
-            'password' => '12345678',
+            'password' => Hash::make('12345678'),
         ]);
 
         User::factory(25)->create();
