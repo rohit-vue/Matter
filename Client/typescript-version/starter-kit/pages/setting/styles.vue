@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+  layout: "setting",
+})
+
 import { ref } from 'vue';
 import CategoryDrawer from "@/views/setting/stylesDrawers/CategoryDrawer.vue"
 import SizeDrawer from "@/views/setting/stylesDrawers/SizeDrawer.vue"
