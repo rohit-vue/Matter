@@ -1,5 +1,8 @@
 <script setup lang="ts">
+import WorkflowSidebar from '../../../../components/WorkflowSidebar.vue';
 </script>
 <template>
-  <div>hello</div>
+  <div>
+    <WorkflowSidebar />
+  </div>
 </template>

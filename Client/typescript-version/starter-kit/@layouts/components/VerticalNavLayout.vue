@@ -80,19 +80,6 @@ export default defineComponent({
         h('div', { class: 'page-content-container' }, slots.default?.()),
       )
 
-      // 👉 Footer
-      const footer = h(
-        'footer',
-        { class: 'layout-footer' },
-        [
-          h(
-            'div',
-            { class: 'footer-content-container' },
-            slots.footer?.(),
-          ),
-        ],
-      )
-
       // 👉 Overlay
       const layoutOverlay = h(
         'div',
@@ -113,7 +100,6 @@ export default defineComponent({
             [
               navbar,
               main,
-              footer,
             ],
           ),
           layoutOverlay,
@@ -174,11 +160,6 @@ export default defineComponent({
 
   &.layout-navbar-hidden .layout-navbar {
     @extend %layout-navbar-hidden;
-  }
-
-  // 👉 Footer
-  .layout-footer {
-    @include mixins.boxed-content;
   }
 
   // 👉 Layout overlay

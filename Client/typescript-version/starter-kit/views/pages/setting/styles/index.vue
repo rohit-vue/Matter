@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-
+import CategoryDrawer from "@/views/setting/stylesDrawers/CategoryDrawer.vue"
+import SizeDrawer from "@/views/setting/stylesDrawers/SizeDrawer.vue"
+import FieldDrawer from "@/views/setting/stylesDrawers/FieldDrawer.vue"
 // const selectedRole = ref<string | null>(null);
+const isAddNewCategoryDrawerVisible = ref(false);
+const isAddNewSizeDrawerVisible = ref(false);
+const isAddNewFieldDrawerVisible = ref(false);
 
 const headers = [
   { title: 'Category', key: 'category', width: '40%', sortable: false, },
@@ -38,9 +43,9 @@ const dummyData2 = ref([
 ]);
 
 const dummyData3 = ref([
-  { id: 1, active: '2', field: 'Category A', type: "XL,S,M", internal: false },
-  { id: 2, active: '2', field: 'Category B', type: "S,M,L", internal: true },
-  { id: 3, active: '2', field: 'Category C', type: "M,XL", internal: false },
+  { id: 1, active: true , field: 'Category A', type: "XL,S,M", internal: false },
+  { id: 2, active: true , field: 'Category B', type: "S,M,L", internal: true },
+  { id: 3, active: true , field: 'Category C', type: "M,XL", internal: false },
 ]);
 
 const chips = ref(['Programming', 'Playing games', 'Sleeping'])
@@ -78,16 +83,16 @@ const items = ref(['Streaming', 'Eating', 'Programming', 'Playing games', 'Sleep
 
               <!-- Setting -->
               <template #item.setting="{ item }">
-                <IconBtn size="small" @click="editUser(item)">
+                <IconBtn size="small">
                   <VIcon icon="ri-pencil-line" />
                 </IconBtn>
-                <IconBtn size="small" icon="ri-delete-bin-7-line" @click="deleteUser(item.id)" />
+                <IconBtn size="small" icon="ri-delete-bin-7-line"/>
               </template>
 
               <!-- Bottom -->
               <template #bottom>
                 <div class="d-flex justify-start py-2">
-                  <VBtn variant="outlined" @click="isAddCustomerDrawerOpen = !isAddCustomerDrawerOpen">
+                  <VBtn variant="outlined" @click="isAddNewCategoryDrawerVisible = !isAddNewCategoryDrawerVisible">
                     Add Category
                   </VBtn>
                 </div>
@@ -130,7 +135,7 @@ const items = ref(['Streaming', 'Eating', 'Programming', 'Playing games', 'Sleep
               <!-- Bottom -->
               <template #bottom>
                 <div class="d-flex justify-start py-2">
-                  <VBtn variant="outlined" @click="isAddCustomerDrawerOpen = !isAddCustomerDrawerOpen">
+                  <VBtn variant="outlined" @click="isAddNewSizeDrawerVisible = !isAddNewSizeDrawerVisible">
                     Add Size Range
                   </VBtn>
                 </div>
@@ -145,7 +150,7 @@ const items = ref(['Streaming', 'Eating', 'Programming', 'Playing games', 'Sleep
             <VDataTable :headers="headers3" :items="dummyData3" item-value="id" class="text-no-wrap billing-history-table">
               <!-- Active -->
               <template #item.active="{ item }">
-                {{ item.active }}
+                <VSwitch v-model="item.active"></VSwitch>
               </template>
 
               <!-- custom field -->
@@ -174,7 +179,7 @@ const items = ref(['Streaming', 'Eating', 'Programming', 'Playing games', 'Sleep
               <!-- Bottom -->
               <template #bottom>
                 <div class="d-flex justify-start py-2">
-                  <VBtn variant="outlined" @click="isAddCustomerDrawerOpen = !isAddCustomerDrawerOpen">
+                  <VBtn variant="outlined" @click="isAddNewFieldDrawerVisible = !isAddNewFieldDrawerVisible">
                     Add Custom Field
                   </VBtn>
                 </div>
@@ -195,13 +200,17 @@ const items = ref(['Streaming', 'Eating', 'Programming', 'Playing games', 'Sleep
             clear-icon="ri-close-circle-line"
             :items="items"
           />
-          <div class="d-flex justify-start py-2 mx-4">
-            <VBtn variant="outlined" @click="isAddCustomerDrawerOpen = !isAddCustomerDrawerOpen">
-              Add Tags
-            </VBtn>
-          </div>
         </VCard>
       </VCol>
+      <CategoryDrawer
+        v-model:isDrawerOpen="isAddNewCategoryDrawerVisible"
+      />
+      <SizeDrawer
+        v-model:isDrawerOpen="isAddNewSizeDrawerVisible"
+      />
+      <FieldDrawer
+        v-model:isDrawerOpen="isAddNewFieldDrawerVisible"
+      />
     </VRow>
   </div>
 </template>

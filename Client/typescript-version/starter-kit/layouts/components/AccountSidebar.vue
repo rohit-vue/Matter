@@ -4,7 +4,6 @@
 <template>
   <VCol cols="2" class="sidebar-container">
     <h1 class="sidebar-header">Account Settings</h1>
-  <!-- <VCol cols="3" class="sidebar-container" style="box-shadow: none; margin-top: -2rem"> -->
       <VCard style="background-color: inherit; box-shadow: none; margin-left: -1.6rem; margin-top: -0.5rem;">
         <VCardText style="background-color: inherit;">
           <VList style="background-color: inherit;">
@@ -44,7 +43,6 @@
           </VList>
         </VCardText>
       </VCard>
-    <!-- </VCol> -->
   </VCol>
 </template>
 

@@ -34,7 +34,6 @@ export const useConfigStore = defineStore('config', () => {
     isNavbarBlurEnabled,
     appContentLayoutNav,
     isVerticalNavCollapsed,
-    footerType,
     isAppRTL,
   } = storeToRefs(useLayoutConfigStore())
 
@@ -50,7 +49,6 @@ export const useConfigStore = defineStore('config', () => {
     isNavbarBlurEnabled,
     appContentLayoutNav,
     isVerticalNavCollapsed,
-    footerType,
     isAppRTL,
   }
 })

@@ -40,11 +40,6 @@ import { VNodeRenderer } from '@layouts/components/VNodeRenderer'
     <!-- 👉 Pages -->
     <slot />
 
-    <!-- 👉 Footer -->
-    <template #footer>
-      <Footer />
-    </template>
-
     <!-- 👉 Customizer -->
     <!-- <TheCustomizer /> -->
   </HorizontalNavLayout>

@@ -62,32 +62,19 @@ const tabs = [
       </VTab>
     </VTabs>
 
-    <ClientOnly>
-      <VWindow
-        v-model="activeTab"
-        class="mt-5 disable-tab-transition"
-        :touch="false"
-      >
-        <!-- Profile -->
-        <VWindowItem value="workflows">
-          <SettingWorkflows />
-        </VWindowItem>
-
-        <!-- Teams -->
-        <VWindowItem value="styles">
-          <SettingStyles />
-        </VWindowItem>
-
-        <!-- Projects -->
-        <VWindowItem value="components">
-          <SettingComponents />
-        </VWindowItem>
-
-        <!-- Connections -->
-        <VWindowItem value="documents">
-          <SettingDocuments />
-        </VWindowItem>
-      </VWindow>
-    </ClientOnly>
+    <div class="mt-5">
+      <template v-if="activeTab === 'workflows'">
+        <SettingWorkflows />
+      </template>
+      <template v-else-if="activeTab === 'styles'">
+        <SettingStyles />
+      </template>
+      <template v-else-if="activeTab === 'components'">
+        <SettingComponents />
+      </template>
+      <template v-else-if="activeTab === 'documents'">
+        <SettingDocuments />
+      </template>
+    </div>
   </div>
 </template>
