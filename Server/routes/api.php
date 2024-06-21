@@ -24,6 +24,10 @@ Route::post('settings/workflow/tasks',[SettingsWorkflowController::class,'tasks'
 Route::get('settings/workflow/tasks',[SettingsWorkflowController::class,'show_tasks']);
 Route::post('settings/workflow/qualitycontrol',[SettingsWorkflowController::class,'qualityControl']);
 Route::get('settings/workflow/qualitycontrol',[SettingsWorkflowController::class,'show_qualityControl']);
+Route::get('settings/workflow/samplingstages',[SettingsWorkflowController::class,'samplingstages']);
+Route::post('settings/workflow/samplingstages',[SettingsWorkflowController::class,'show_samplingstages']);
+Route::post('settings/workflow/seasons',[SettingsWorkflowController::class,'seasons']);
+Route::get('settings/workflow/seasons',[SettingsWorkflowController::class,'show_seasons']);
 
 
 

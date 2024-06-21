@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SettingsWorkflowTasks;
-use App\Models\SettingsWorkflowQualityControl;
 use Illuminate\Http\Request;
+use App\Models\SettingsWorkflowTasks;
+use App\Models\SettingsWorkflowSeasons;
+use App\Models\SettingsWorkflowQualityControl;
+use App\Models\SettingsWorkflowSamplingStages;
 
 class SettingsWorkflowController extends Controller
 {
@@ -59,6 +61,60 @@ class SettingsWorkflowController extends Controller
     public function show_qualityControl()
     {
         $data = SettingsWorkflowQualityControl::get();
+        return response()->json([
+            'data' => $data
+        ]);
+    }
+
+    public function samplingstages(Request $request)
+    {
+        $request->validate([
+            'stage_name' => 'required|string|max:255',
+            'default' => 'required|string|max:255',
+        ]);
+
+        $task = new SettingsWorkflowSamplingStages();
+        $task->stage_name = $request->stage_name;
+        $task->default = $request->default;
+        $task->save();
+
+        return response()->json([
+            'task' => $task,
+            'message' => 'success',
+        ], 201);
+    }
+
+    public function show_samplingstages()
+    {
+        $data = SettingsWorkflowSamplingStages::get();
+        return response()->json([
+            'data' => $data
+        ]);
+    }
+
+    public function seasons(Request $request)
+    {
+        $request->validate([
+            'season' => 'required|string|max:255',
+            'description' => 'required|string|max:255',
+            'sampling_stages' => 'required|text|max:255',
+        ]);
+
+        $task = new SettingsWorkflowSeasons();
+        $task->season = $request->season;
+        $task->description = $request->description;
+        $task->sampling_stages = $request->sampling_stages;
+        $task->save();
+
+        return response()->json([
+            'task' => $task,
+            'message' => 'success',
+        ], 201);
+    }
+
+    public function show_seasons()
+    {
+        $data = SettingsWorkflowSeasons::get();
         return response()->json([
             'data' => $data
         ]);

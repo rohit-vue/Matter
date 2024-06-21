@@ -3,10 +3,12 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\SettingsWorkflowTasks;
-use App\Models\SettingsWorkflowQualityControl;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\SettingsWorkflowTasks;
+use App\Models\SettingsWorkflowSeasons;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\SettingsWorkflowQualityControl;
+use App\Models\SettingsWorkflowSamplingStages;
 
 class DatabaseSeeder extends Seeder
 {
@@ -204,6 +206,52 @@ class DatabaseSeeder extends Seeder
                 "description" => "Check outlook and placement of any prints",
                 "status" => "inactive"
             ]
+        ]);
+
+        SettingsWorkflowSamplingStages::insert([
+            [
+                'stage_name' => '1st Proto',
+                'default' => false
+            ],
+            [
+                'stage_name' => '2nd Proto',
+                'default' => false
+            ],
+            [
+                'stage_name' => 'SMS Sample',
+                'default' => false
+            ],
+            [
+                'stage_name' => 'PP Sample',
+                'default' => false
+            ],
+            [
+                'stage_name' => 'TOP Sample',
+                'default' => true
+            ],
+        ]);
+
+        SettingsWorkflowSeasons::insert([
+            [
+                'season' => 'SS24',
+                'description' => 'Spring Summer 2024',
+                'sampling_stages' => json_encode(['1st Photo', 'SMS', 'P.P', 'TOP'])
+            ],
+            [
+                'season' => 'AW24',
+                'description' => 'Autumn Winter 2024',
+                'sampling_stages' => json_encode(['1st Photo', 'SMS', 'P.P', 'TOP'])
+            ],
+            [
+                'season' => 'SS25',
+                'description' => 'Spring Summer 2025',
+                'sampling_stages' => json_encode(['1st Photo', 'SMS', 'P.P', 'TOP'])
+            ],
+            [
+                'season' => 'AW25',
+                'description' => 'Autumn Winter 2025',
+                'sampling_stages' => json_encode(['1st Photo', 'SMS', 'P.P', 'TOP'])
+            ],
         ]);        
     }
 }
