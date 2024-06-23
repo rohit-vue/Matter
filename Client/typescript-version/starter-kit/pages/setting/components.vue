@@ -15,26 +15,26 @@ const isAddNewFieldDrawerVisible = ref(false);
 // const selectedRole = ref<string | null>(null);
 
 const headers = [
-  { title: 'Category', key: 'category', width: '40%', sortable: false, },
-  { title: 'Active', key: 'active', sortable: false, },
-  { title: 'Default', key: 'default', sortable: false, },
-  { title: 'Setting', key: 'setting', sortable: false, },
+  { title: 'Category', key: 'category', width: '40%', sortable: false },
+  { title: 'Active', key: 'active', sortable: false },
+  { title: 'Default', key: 'default', sortable: false },
+  { title: 'Setting', key: 'setting', sortable: false },
 ]
 
 const headers2 = [
   { title: 'Unit', key: 'unit', sortable: false, },
-  { title: 'Category', key: 'category', width: '35%', sortable: false, },
-  { title: 'Active', key: 'active', sortable: false, },
-  { title: 'Default', key: 'default', sortable: false, },
-  { title: 'Setting', key: 'setting', sortable: false, },
+  { title: 'Category', key: 'category', width: '35%', sortable: false },
+  { title: 'Active', key: 'active', sortable: false },
+  { title: 'Default', key: 'default', sortable: false },
+  { title: 'Setting', key: 'setting', sortable: false },
 ]
 
 const headers3 = [
-  { title: 'Active', key: 'active', width: '10%', sortable: false, },
-  { title: 'Custom Field', key: 'field', sortable: false, },
-  { title: 'Field Type', key: 'type', sortable: false, },
-  { title: 'Internal', key: 'internal', sortable: false, },
-  { title: 'Setting', key: 'setting', sortable: false, },
+  { title: 'Active', key: 'active', width: '10%', sortable: false },
+  { title: 'Custom Field', key: 'field', sortable: false },
+  { title: 'Field Type', key: 'type', sortable: false },
+  { title: 'Internal', key: 'internal', sortable: false },
+  { title: 'Setting', key: 'setting', sortable: false },
 ]
 
 const dummyData = ref([
@@ -49,7 +49,7 @@ const dummyData2 = ref([
   { id: 1, unit: 'cm', category: 'Category A', active: 'true', default: false },
   { id: 2, unit: 'mm', category: 'Category B', active: 'true', default: true },
   { id: 3, unit: 'cm', category: 'Category C', active: 'true', default: false },
-]);
+])
 
 const dummyData3 = ref([
   { id: 1, active: true, field: 'Weight', type: "XL,S,M", internal: false },
@@ -60,8 +60,8 @@ const dummyData3 = ref([
 const isDefaultChipVisible = ref(true)
 const chips = ref(['Mens', 'Womens', 'Test'])
 const items = ref(['Streaming', 'Mens', 'Programming', 'Womens', 'Test'])
-
 </script>
+
 <template>
   <div>
     <VRow justify="end">
@@ -71,7 +71,7 @@ const items = ref(['Streaming', 'Mens', 'Programming', 'Womens', 'Test'])
           <VCardTitle style="padding: 1rem;">Component Categories</VCardTitle>
           <VCardSubtitle style="margin-top: -1rem;">Choose where you ship and how much you charge for shipping at checkout.</VCardSubtitle>
           <VCol class="mx-1">
-            <VDataTable :headers="headers" :items="dummyData" item-value="id" class="text-no-wrap billing-history-table">
+            <VDataTable :headers="headers" :items="dummyData" item-value="id" class="text-no-wrap">
               <!-- User -->
               <template #item.category="{ item }">
                 <div class="d-flex align-center pt-2 pb-3">

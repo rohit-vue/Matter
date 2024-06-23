@@ -1,16 +1,17 @@
+<!-- eslint-disable @typescript-eslint/quotes -->
 <script setup lang="ts">
-definePageMeta({
-  layout: "setting",
-})
-
-import { ref } from 'vue';
+import { ref } from 'vue'
 import CategoryDrawer from "@/views/setting/stylesDrawers/CategoryDrawer.vue"
 import SizeDrawer from "@/views/setting/stylesDrawers/SizeDrawer.vue"
 import FieldDrawer from "@/views/setting/stylesDrawers/FieldDrawer.vue"
-// const selectedRole = ref<string | null>(null);
-const isAddNewCategoryDrawerVisible = ref(false);
-const isAddNewSizeDrawerVisible = ref(false);
-const isAddNewFieldDrawerVisible = ref(false);
+
+const isAddNewCategoryDrawerVisible = ref(false)
+const isAddNewSizeDrawerVisible = ref(false)
+const isAddNewFieldDrawerVisible = ref(false)
+
+definePageMeta({
+  layout: 'setting',
+})
 
 const headers = [
   { title: 'Category', key: 'category', width: '40%', sortable: false, },
@@ -38,24 +39,23 @@ const dummyData = ref([
   { id: 1, category: 'Category A', active: true, default: false },
   { id: 2, category: 'Category B', active: false, default: true },
   { id: 3, category: 'Category C', active: true, default: false },
-]);
+])
 
 const dummyData2 = ref([
   { id: 1, range: 'Category A', sizes: "XL,S,M", default: false },
   { id: 2, range: 'Category B', sizes: "S,M,L", default: true },
   { id: 3, range: 'Category C', sizes: "M,XL", default: false },
-]);
+])
 
 const dummyData3 = ref([
-  { id: 1, active: true , field: 'Category A', type: "XL,S,M", internal: false },
-  { id: 2, active: true , field: 'Category B', type: "S,M,L", internal: true },
-  { id: 3, active: true , field: 'Category C', type: "M,XL", internal: false },
-]);
+  { id: 1, active: true, field: 'Category A', type: "XL,S,M", internal: false },
+  { id: 2, active: true, field: 'Category B', type: "S,M,L", internal: true },
+  { id: 3, active: true, field: 'Category C', type: "M,XL", internal: false },
+])
 
 const chips = ref(['Programming', 'Playing games', 'Sleeping'])
-const items = ref(['Streaming', 'Eating', 'Programming', 'Playing games', 'Sleeping'])
-
 </script>
+
 <template>
   <div>
     <VRow justify="end">

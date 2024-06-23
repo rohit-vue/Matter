@@ -1,8 +1,8 @@
 <script setup>
-import SettingSampling from "@/views/pages/setting/sampling/index.vue"
-import SettingSeasons from "@/views/pages/setting/seasons/index.vue"
-import SettingQuality from "@/views/pages/setting/quality/index.vue"
-import SettingTasks from "@/views/pages/setting/tasks/index.vue"
+import SettingSampling from "@/views/pages/setting/workflow/sampling/index.vue"
+import SettingSeasons from "@/views/pages/setting/workflow/seasons/index.vue"
+import SettingQuality from "@/views/pages/setting/workflow/quality/index.vue"
+import SettingTasks from "@/views/pages/setting/workflow/tasks/index.vue"
 
 definePageMeta({
   layout: "setting",
@@ -21,7 +21,7 @@ const activeTab = computed({
 // tabs
 const tabs = [
   {
-    title: 'Sampling',
+    title: 'Sampling Stage',
     icon: 'ri-user-line',
     tab: 'sampling',
   },
@@ -31,7 +31,7 @@ const tabs = [
     tab: 'seasons',
   },
   {
-    title: 'Quality',
+    title: 'Quality Control',
     icon: 'ri-computer-line',
     tab: 'quality',
   },
@@ -44,28 +44,32 @@ const tabs = [
 </script>
 
 <template>
-  <div>
-    <VTabs
-      v-model="activeTab"
-      class="v-tabs-pill"
-    >
-      <VTab
-        v-for="item in tabs"
-        :key="item.icon"
-        :value="item.tab"
-        :to="{ name: 'setting-workflow-tab', params: { tab: item.tab } }"
+  <VRow class="ml-10 mt-2">
+    <VCol cols="3">
+      <h3 class="ml-2">Workflow Setup</h3>
+      <VTabs
+        v-model="activeTab"
+        direction="vertical"
+        class="mt-4"
       >
-        <VIcon
-          start
-          :icon="item.icon"
-        />
-        {{ item.title }}
-      </VTab>
-    </VTabs>
+        <VTab
+          v-for="item in tabs"
+          :key="item.icon"
+          :value="item.tab"
+          :to="{ name: 'setting-workflow-tab', params: { tab: item.tab } }"
+        >
+          <VIcon
+            start
+            :icon="item.icon"
+          />
+          {{ item.title }}
+        </VTab>
+      </VTabs>
+    </VCol>
 
-    <div class="mt-5">
+    <VCol cols="14" class="mt-5 mr-4">
       <template v-if="activeTab === 'sampling'">
-        <SettingSampling/>
+        <SettingSampling />
       </template>
       <template v-else-if="activeTab === 'seasons'">
         <SettingSeasons />
@@ -76,6 +80,6 @@ const tabs = [
       <template v-else-if="activeTab === 'tasks'">
         <SettingTasks />
       </template>
-    </div>
-  </div>
+    </VCol>
+  </VRow>
 </template>

@@ -80,10 +80,10 @@ const handleDrawerModelValueUpdate = val => {
     <VRow justify="space-between" align="center" class="mx-2">
       <AppDrawerHeaderSection
         class="mt-6"
-        @cancel="resetForm"
+        @cancel="closeNavigationDrawer"
       />
       <div class="custom-btn">
-        <VBtn variant="outlined" @click="resetForm">
+        <VBtn variant="outlined" @click="closeNavigationDrawer">
           Cancel
         </VBtn>
         <VBtn variant="tonal" class="btn" @click="saveChanges">

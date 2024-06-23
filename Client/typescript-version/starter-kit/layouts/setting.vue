@@ -1,10 +1,11 @@
+<!-- eslint-disable import/no-unresolved -->
 <script lang="ts" setup>
 import { useConfigStore } from '@core/stores/config'
 import { AppContentLayoutNav } from '@layouts/enums'
 import { switchToVerticalNavOnLtOverlayNavBreakpoint } from '@layouts/utils'
-import SettingNavbar from '@/layout/components/SettingNavbar.vue';
+import SettingNavbar from '@/layouts/components/SettingNavbar.vue'
 
-// by this you can prevent switching from vertical to horizontal 
+// by this you can prevent switching from vertical to horizontal
 // const DefaultLayoutWithHorizontalNav = defineAsyncComponent(() => import('./components/DefaultLayoutWithHorizontalNav.vue'))
 const DefaultLayoutWithVerticalNav = defineAsyncComponent(() => import('./components/DefaultLayoutWithVerticalNav.vue'))
 
@@ -20,7 +21,7 @@ injectSkinClasses()
 </script>
 
 <template>
-  <Component 
+  <Component
     v-bind="layoutAttrs"
     :is="configStore.appContentLayoutNav === AppContentLayoutNav.Vertical ? DefaultLayoutWithVerticalNav : ''"
   >

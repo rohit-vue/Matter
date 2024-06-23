@@ -40,6 +40,11 @@ export default defineNuxtConfig({
     }],
   },
 
+  routeRules: {
+    // Redirects legacy urls
+    '/setting/workflow': { redirect: '/setting/workflow/sampling' },
+  },
+
   plugins: ['@/plugins/vuetify/index.ts', '@/plugins/iconify/index.ts'],
 
   imports: {
