@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
 
         User::factory(25)->create();
 
+        $this->call(ProductDevSeasonSeeder::class);
+
         //* Insert multiple records into SettingsWorkflowTasks table
         SettingsWorkflowTasks::insert([
             [
@@ -256,6 +258,6 @@ class DatabaseSeeder extends Seeder
                 'description' => 'Autumn Winter 2025',
                 'sampling_stages' => json_encode(['1st Photo', 'SMS', 'P.P', 'TOP'])
             ],
-        ]);        
+        ]);      
     }
 }
