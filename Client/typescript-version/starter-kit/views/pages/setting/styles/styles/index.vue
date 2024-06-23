@@ -59,8 +59,7 @@ const chips = ref(['Programming', 'Playing games', 'Sleeping'])
 <template>
   <div>
     <VRow justify="end">
-      <h1 class="mt-4" style="padding-right: 11rem; font-size: 20px;">Styles Setup</h1>
-      <VCol cols="8">
+      <VCol cols="11">
         <VCard>
           <VCardTitle style="padding: 1rem;">Styles Categories</VCardTitle>
           <VCardSubtitle style="margin-top: -1rem;">Choose where you ship and how much you charge for shipping at checkout.</VCardSubtitle>

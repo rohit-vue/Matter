@@ -1,5 +1,5 @@
 <!-- eslint-disable @typescript-eslint/quotes -->
-<script setup >
+<script setup lang="ts">
 import { ref } from 'vue'
 import CategoryDrawer from "@/views/setting/stylesDrawers/CategoryDrawer.vue"
 
