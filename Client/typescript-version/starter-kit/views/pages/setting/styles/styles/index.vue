@@ -234,7 +234,7 @@ const chips = ref(['Programming', 'Playing games', 'Sleeping'])
                   </template>
 
                   <!-- Dialog Content -->
-                  <VCard title="User Profile">
+                  <VCard title="Select Custom Field">
                     <DialogCloseBtn
                       variant="text"
                       size="default"

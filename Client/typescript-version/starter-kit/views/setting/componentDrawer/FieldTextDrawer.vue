@@ -108,7 +108,7 @@ const handleDrawerModelValueUpdate = val => {
                     v-model="fieldName"
                     label="Field Name"
                     :rules="[requiredValidator]"
-                    placeholder="TP Donemade "
+                    placeholder="TP Done"
                   />
                 </VCol>
 

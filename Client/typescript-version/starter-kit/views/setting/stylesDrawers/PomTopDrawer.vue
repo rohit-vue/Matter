@@ -18,7 +18,6 @@ const resetForm = () => {
   refVForm.value?.reset();
 };
 
-const isFormValid = ref(false)
 const refForm = ref()
 const fullName = ref('')
 const userName = ref('')
@@ -31,7 +30,6 @@ const plan = ref()
 const status = ref()
 
 const chips = ref(['XS', 'S', 'M'])
-// const items = ref(['L', 'S', 'Programming', 'Playing games', 'Sleeping'])
 
 // 👉 drawer close
 const closeNavigationDrawer = () => {

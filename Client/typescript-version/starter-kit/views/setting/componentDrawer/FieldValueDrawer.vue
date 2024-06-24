@@ -3,10 +3,10 @@ import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 
 // const selectedCountry = ref<string | null>(null);
 const typeOfCountry = ref([
-  'Divider',
-  'Boolean (Yes/No)',
-  'Text',
-  'Allowed Values',
+  'United Kingdom',
+  'United States',
+  'China',
+  'Russia',
 ]);
 
 const props = defineProps({
@@ -23,20 +23,15 @@ const emit = defineEmits([
 ])
 
 const resetForm = () => {
-  refVForm.value?.reset();
   emit('update:isDrawerOpen', false);
+  refVForm.value?.reset();
 };
 
 const refForm = ref()
-const fullName = ref('')
-const userName = ref('')
-const email = ref('')
-const company = ref('')
-const country = ref()
-const contact = ref('')
-const role = ref()
-const plan = ref()
-const status = ref()
+const fieldId = ref('')
+const fieldType = ref('')
+const fieldName = ref('')
+const fieldValue = ref('')
 
 // 👉 drawer close
 const closeNavigationDrawer = () => {
@@ -47,30 +42,7 @@ const closeNavigationDrawer = () => {
   })
 }
 
-const onSubmit = () => {
-  refForm.value?.validate().then(({ valid }) => {
-    if (valid) {
-      emit('userData', {
-        id: 0,
-        fullName: fullName.value,
-        company: company.value,
-        role: role.value,
-        username: userName.value,
-        country: country.value,
-        contact: contact.value,
-        email: email.value,
-        currentPlan: plan.value,
-        status: status.value,
-        avatar: '',
-      })
-      emit('update:isDrawerOpen', false)
-      nextTick(() => {
-        refForm.value?.reset()
-        refForm.value?.resetValidation()
-      })
-    }
-  })
-}
+const chips = ref(['Casual', 'Street'])
 
 const handleDrawerModelValueUpdate = val => {
   emit('update:isDrawerOpen', val)
@@ -112,8 +84,26 @@ const handleDrawerModelValueUpdate = val => {
               <VRow class="mt-5">
                 <VCol>
                   <div style="font-size: 21px; font-weight: 600;">
-                    {{ props.editingUserId ? 'Edit' : 'Add' }} a Component Field
+                    {{ props.editingUserId ? 'Edit' : 'Add' }} a Custom Field
                   </div>
+                </VCol>
+
+                <VCol cols="12">
+                  <VTextField
+                    v-model="fieldType"
+                    label="List of Values"
+                    :rules="[requiredValidator]"
+                    placeholder="List of Values"
+                  />
+                </VCol>
+
+                <VCol cols="12">
+                  <VTextField
+                    v-model="fieldId"
+                    label="Field ID"
+                    :rules="[requiredValidator]"
+                    placeholder="CF3"
+                  />
                 </VCol>
 
                 <VCol cols="12">
@@ -121,22 +111,28 @@ const handleDrawerModelValueUpdate = val => {
                     v-model="fieldName"
                     label="Field Name"
                     :rules="[requiredValidator]"
-                    placeholder="Country of Origin"
+                    placeholder="Theme"
                   />
                 </VCol>
-                
+
                 <VCol cols="12">
-                  <VSelect
-                    v-model="selectedCountry"
-                    :rules="[requiredValidator]"
-                    :items="typeOfCountry"
-                    label="Field Type"
-                    placeholder="Select a Field"
-                  ></VSelect>
+                  <VCombobox
+                    class=""
+                    v-model="chips"
+                    label="Values"
+                    chips
+                    clearable
+                    multiple
+                    closable-chips
+                    clear-icon="ri-close-circle-line"
+                  />
                 </VCol>
 
                 <VCol cols="12">
                   <VSwitch label="Internal Field"></VSwitch>
+                </VCol>
+                <VCol cols="12">
+                  <VSwitch label="Editable by Supplier"></VSwitch>
                 </VCol>
 
               </VRow>

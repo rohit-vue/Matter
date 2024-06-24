@@ -90,7 +90,7 @@ const handleDrawerModelValueUpdate = val => {
                     v-model="fieldType"
                     label="Field Type"
                     :rules="[requiredValidator]"
-                    placeholder="Text"
+                    placeholder="Number"
                   />
                 </VCol>
 
@@ -99,7 +99,7 @@ const handleDrawerModelValueUpdate = val => {
                     v-model="fieldId"
                     label="Field ID"
                     :rules="[requiredValidator]"
-                    placeholder="CF4"
+                    placeholder="CF6"
                   />
                 </VCol>
 
@@ -108,7 +108,7 @@ const handleDrawerModelValueUpdate = val => {
                     v-model="fieldName"
                     label="Field Name"
                     :rules="[requiredValidator]"
-                    placeholder="TP Donemade "
+                    placeholder="TP Over"
                   />
                 </VCol>
 
