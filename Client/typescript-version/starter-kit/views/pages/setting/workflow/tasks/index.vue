@@ -12,20 +12,22 @@ const headers = [
 ]
 
 const dummyData = ref([
-  { id: 1, task: 'General', description: 'Verify fabric quality & placement' },
-  { id: 2, task: 'Construction', description: 'Check finishing of inside seams' },
-  { id: 3, task: 'Trims', description: 'Verify sewing quality & placement' },
-  { id: 4, task: 'Fit & POMs', description: 'Check overall appearance ' },
+  { id: 1, task: 'Status Update', description: 'Product Development' },
+  { id: 2, task: 'Sample Request', description: 'Product Development' },
+  { id: 1, task: 'Review Confirmation', description: 'Logistics' },
+  { id: 2, task: 'Shipment Request', description: 'Product Development' },
+  { id: 3, task: 'Supplier Visit', description: 'Product Development' },
+  { id: 4, task: 'Techpack Update', description: 'Product Development' },
 ])
 </script>
 
 <template>
   <div>
     <VRow justify="end">
-      <VCol cols="11">
+      <VCol cols="12">
         <VCard>
-          <VCardTitle style="padding: 1rem;">Quality Control Workflow</VCardTitle>
-          <VCardSubtitle style="margin-top: -1rem;">Choose where you ship and how much you charge for shipping at checkout.</VCardSubtitle>
+          <VCardTitle style="padding: 1rem;">Tasks Setup</VCardTitle>
+          <VCardSubtitle style="margin-top: -1rem;">Define common tasks within your workflow</VCardSubtitle>
           <VCol class="mx-1">
             <VDataTable :headers="headers" :items="dummyData" item-value="id" class="text-no-wrap billing-history-table">
               <!-- Task -->

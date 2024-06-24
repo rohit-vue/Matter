@@ -21,7 +21,7 @@ const dummyData = ref([
 <template>
   <div>
     <VRow justify="end">
-      <VCol cols="11">
+      <VCol cols="12">
         <VCard>
           <VCardTitle style="padding: 1rem;">Sampling Stages</VCardTitle>
           <VCardSubtitle style="margin-top: -1rem;">Define your sampling workflow stages</VCardSubtitle>

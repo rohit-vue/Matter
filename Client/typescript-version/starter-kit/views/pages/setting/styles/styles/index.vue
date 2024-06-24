@@ -3,11 +3,50 @@
 import { ref } from 'vue'
 import CategoryDrawer from "@/views/setting/stylesDrawers/CategoryDrawer.vue"
 import SizeDrawer from "@/views/setting/stylesDrawers/SizeDrawer.vue"
-import FieldDrawer from "@/views/setting/stylesDrawers/FieldDrawer.vue"
+import FieldDateDrawer from "@/views/setting/stylesDrawers/FieldDateDrawer.vue"
+import FieldTextDrawer from "@/views/setting/stylesDrawers/FieldTextDrawer.vue"
+import FieldDividerDrawer from "@/views/setting/stylesDrawers/FieldDividerDrawer.vue"
+import FieldValueDrawer from "@/views/setting/stylesDrawers/FieldValueDrawer.vue"
+import FieldNumberDrawer from "@/views/setting/stylesDrawers/FieldNumberDrawer.vue"
+import FieldCheckboxDrawer from "@/views/setting/stylesDrawers/FieldCheckboxDrawer.vue"
 
 const isAddNewCategoryDrawerVisible = ref(false)
 const isAddNewSizeDrawerVisible = ref(false)
-const isAddNewFieldDrawerVisible = ref(false)
+const isAddNewFieldDateDrawerVisible = ref(false)
+const isAddNewFieldTextDrawerVisible = ref(false)
+const isAddNewFieldDividerDrawerVisible = ref(false)
+const isAddNewFieldValueDrawerVisible = ref(false)
+const isAddNewFieldNumberDrawerVisible = ref(false)
+const isAddNewFieldCheckboxDrawerVisible = ref(false)
+const isDialogVisible = ref(false)
+const fieldType = ref('')
+console.log("valueeeeeee: ",fieldType)
+
+const typeField = ref<string[]>([
+  'Date',
+  'List of Values',
+  'Divider',
+  'Text',
+  'Checkbox',
+  'Number',
+]);
+
+const handleClick = () => {
+  isDialogVisible.value = false;
+  if(fieldType.value == 'Date'){
+    isAddNewFieldDateDrawerVisible.value = !isAddNewFieldDateDrawerVisible.value;
+  }else if(fieldType.value == 'List of Values'){
+    isAddNewFieldValueDrawerVisible.value = !isAddNewFieldValueDrawerVisible.value;
+  }else if(fieldType.value == 'Divider'){
+    isAddNewFieldDividerDrawerVisible.value = !isAddNewFieldDividerDrawerVisible.value;
+  }else if(fieldType.value == 'Text'){
+    isAddNewFieldTextDrawerVisible.value = !isAddNewFieldTextDrawerVisible.value;
+  }else if(fieldType.value == 'Checkbox'){
+    isAddNewFieldCheckboxDrawerVisible.value = !isAddNewFieldCheckboxDrawerVisible.value;
+  }else if(fieldType.value == 'Number'){
+    isAddNewFieldNumberDrawerVisible.value = !isAddNewFieldNumberDrawerVisible.value;
+  }
+};
 
 definePageMeta({
   layout: 'setting',
@@ -59,7 +98,7 @@ const chips = ref(['Programming', 'Playing games', 'Sleeping'])
 <template>
   <div>
     <VRow justify="end">
-      <VCol cols="11">
+      <VCol cols="12">
         <VCard>
           <VCardTitle style="padding: 1rem;">Styles Categories</VCardTitle>
           <VCardSubtitle style="margin-top: -1rem;">Choose where you ship and how much you charge for shipping at checkout.</VCardSubtitle>
@@ -181,11 +220,55 @@ const chips = ref(['Programming', 'Playing games', 'Sleeping'])
 
               <!-- Bottom -->
               <template #bottom>
-                <div class="d-flex justify-start py-2">
-                  <VBtn variant="outlined" @click="isAddNewFieldDrawerVisible = !isAddNewFieldDrawerVisible">
-                    Add Custom Field
-                  </VBtn>
-                </div>
+                <VDialog
+                  v-model="isDialogVisible"
+                  max-width="600"
+                >
+                  <!-- Dialog Activator -->
+                  <template #activator="{ props }">
+                    <div class="d-flex justify-start py-2">
+                      <VBtn v-bind="props" variant="outlined">
+                        Add Custom Field
+                      </VBtn>
+                    </div>
+                  </template>
+
+                  <!-- Dialog Content -->
+                  <VCard title="User Profile">
+                    <DialogCloseBtn
+                      variant="text"
+                      size="default"
+                      @click="isDialogVisible = false"
+                    />
+
+                    <VCardText>
+                      <VRow>
+                        <VCol
+                          cols="12"
+                        >
+                          <VSelect
+                            v-model="fieldType"
+                            :rules="[requiredValidator]"
+                            :items="typeField"
+                            label="Field Type"
+                            placeholder="Choose your field"
+                          />
+                        </VCol>
+                        
+                      </VRow>
+                    </VCardText>
+
+                    <VCardActions class="mb-2 mr-3">
+                      <VSpacer />
+                      <VBtn variant="outlined" @click="isDialogVisible.value = false">
+                        Cancel
+                      </VBtn>
+                      <VBtn variant="tonal" class="btn" @click="handleClick">
+                        Save Changes
+                      </VBtn>
+                    </VCardActions>
+                  </VCard>
+                </VDialog>
               </template>
             </VDataTable>
           </VCol>
@@ -201,7 +284,6 @@ const chips = ref(['Programming', 'Playing games', 'Sleeping'])
             multiple
             closable-chips
             clear-icon="ri-close-circle-line"
-            :items="items"
           />
         </VCard>
       </VCol>
@@ -211,9 +293,30 @@ const chips = ref(['Programming', 'Playing games', 'Sleeping'])
       <SizeDrawer
         v-model:isDrawerOpen="isAddNewSizeDrawerVisible"
       />
-      <FieldDrawer
-        v-model:isDrawerOpen="isAddNewFieldDrawerVisible"
+      <FieldDateDrawer
+        v-model:isDrawerOpen="isAddNewFieldDateDrawerVisible"
+      />
+      <FieldValueDrawer
+        v-model:isDrawerOpen="isAddNewFieldValueDrawerVisible"
+      />
+      <FieldDividerDrawer
+        v-model:isDrawerOpen="isAddNewFieldDividerDrawerVisible"
+      />
+      <FieldTextDrawer
+        v-model:isDrawerOpen="isAddNewFieldTextDrawerVisible"
+      />
+      <FieldCheckboxDrawer
+        v-model:isDrawerOpen="isAddNewFieldCheckboxDrawerVisible"
+      />
+      <FieldNumberDrawer
+        v-model:isDrawerOpen="isAddNewFieldNumberDrawerVisible"
       />
     </VRow>
   </div>
 </template>
+<style lang="scss">
+.btn {
+  color: white;
+  background: #9b9a9a;
+}
+</style>

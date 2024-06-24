@@ -23,7 +23,7 @@ const dummyData = ref([
 <template>
   <div>
     <VRow justify="end">
-      <VCol cols="11">
+      <VCol cols="12">
         <VCard>
           <VCardTitle style="padding: 1rem;">Season Setup</VCardTitle>
           <VCardSubtitle style="margin-top: -1rem;">Setup your seasons and the sampling stages associated with them.</VCardSubtitle>

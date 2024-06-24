@@ -23,7 +23,7 @@ const dummyData = ref([
 <template>
   <div>
     <VRow justify="end">
-      <VCol cols="11">
+      <VCol cols="12">
         <VCard>
           <VCardTitle style="padding: 1rem;">Quality Control Workflow</VCardTitle>
           <VCardSubtitle style="margin-top: -1rem;">Choose where you ship and how much you charge for shipping at checkout.</VCardSubtitle>
