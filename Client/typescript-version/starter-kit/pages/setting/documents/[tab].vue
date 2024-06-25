@@ -1,7 +1,7 @@
 <script setup>
-import SettingStyleTemplate from "@/views/pages/setting/documents/styleTemplate/index.vue"
-import SettingComponentTemplate from "@/views/pages/setting/documents/componentTemplate/index.vue"
-import SettingSupplyTemplate from "@/views/pages/setting/documents/supplyTemplate/index.vue"
+import SettingDocumentStyleTemplate from "@/views/pages/setting/documents/styleTemplate/index.vue"
+import SettingDocumentComponentTemplate from "@/views/pages/setting/documents/componentTemplate/index.vue"
+import SettingDocumentSupplyTemplate from "@/views/pages/setting/documents/supplyTemplate/index.vue"
 
 definePageMeta({
   layout: "setting",
@@ -61,15 +61,15 @@ const tabs = [
       </VTabs>
     </VCol>
 
-    <VCol cols="14" class="mt-5 mr-4">
+    <VCol cols="8" class="mt-5 mr-4">
       <template v-if="activeTab === 'style-template'">
-        <SettingStyleTemplate />
+        <SettingDocumentStyleTemplate />
       </template>
       <template v-else-if="activeTab === 'component-template'">
-        <SettingComponentTemplate />
+        <SettingDocumentComponentTemplate />
       </template>
       <template v-else-if="activeTab === 'supply-template'">
-        <SettingSupplyTemplate />
+        <SettingDocumentSupplyTemplate />
       </template>
     </VCol>
   </VRow>

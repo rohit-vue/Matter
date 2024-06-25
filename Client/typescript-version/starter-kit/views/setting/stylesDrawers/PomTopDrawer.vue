@@ -29,8 +29,6 @@ const role = ref()
 const plan = ref()
 const status = ref()
 
-const chips = ref(['XS', 'S', 'M'])
-
 // 👉 drawer close
 const closeNavigationDrawer = () => {
   emit('update:isDrawerOpen', false)
