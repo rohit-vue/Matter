@@ -12,19 +12,9 @@ const typeOfRole = ref<string[]>([
 
 // 👉 headers
 const headers = [
-  {
-    title: 'User',
-    key: 'user',
-  },
-  {
-    title: 'Role',
-    key: 'role',
-  },
-  {
-    title: 'Setting',
-    key: 'setting',
-    sortable: false,
-  },
+  { title: 'User', key: 'user' },
+  { title: 'Role', key: 'role' },
+  { title: 'Setting', key: 'setting', sortable: false },
 ]
 
 // Team members data

@@ -2,74 +2,71 @@
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 
 const props = defineProps({
-  isDrawerOpen: {
-    type: Boolean,
-    required: true,
-  },
+  isDrawerOpen: { type: Boolean, required: true },
+  editingUnitId: { type: Number, default: null },
+  unitData: { type: Array, required: true },
 })
 
-const emit = defineEmits([
-  'update:isDrawerOpen',
-  'userData',
-])
-
-const resetForm = () => {
-  refVForm.value?.reset();
-  emit('update:isDrawerOpen', false);
-};
-
-const isFormValid = ref(false)
-const refForm = ref()
-const fullName = ref('')
-const userName = ref('')
-const email = ref('')
-const company = ref('')
-const country = ref()
-const contact = ref('')
-const role = ref()
-const plan = ref()
-const status = ref()
-
-const chips = ref(['XS', 'S', 'M'])
-// const items = ref(['L', 'S', 'Programming', 'Playing games', 'Sleeping'])
-
-// 👉 drawer close
-const closeNavigationDrawer = () => {
-  emit('update:isDrawerOpen', false)
-  nextTick(() => {
-    refForm.value?.reset()
-    refForm.value?.resetValidation()
-  })
-}
-
-const onSubmit = () => {
-  refForm.value?.validate().then(({ valid }) => {
-    if (valid) {
-      emit('userData', {
-        id: 0,
-        fullName: fullName.value,
-        company: company.value,
-        role: role.value,
-        username: userName.value,
-        country: country.value,
-        contact: contact.value,
-        email: email.value,
-        currentPlan: plan.value,
-        status: status.value,
-        avatar: '',
-      })
-      emit('update:isDrawerOpen', false)
-      nextTick(() => {
-        refForm.value?.reset()
-        refForm.value?.resetValidation()
-      })
-    }
-  })
-}
+const emit = defineEmits(['update:isDrawerOpen', 'add-unit'])
 
 const handleDrawerModelValueUpdate = val => {
   emit('update:isDrawerOpen', val)
 }
+
+const refVForm = ref()
+const unit = ref('')
+const category = ref([])
+const defaultUnit = ref(false)
+
+const requiredValidator = value => !!value || 'This field is required'
+
+const resetForm = () => {
+  refVForm.value?.reset()
+  unit.value = ''
+  category.value = []
+  defaultUnit.value = false
+  emit('update:isDrawerOpen', false)
+}
+
+const saveChanges = () => {
+  console.log(category.value)
+  if (refVForm.value?.validate()) {
+    const newUnit = {
+      id: props.editingUnitId || Date.now(),
+      unit: unit.value,
+      category: category.value,
+      active: true, // assuming you want to set default active state
+      default: defaultUnit.value,
+    }
+    console.log(newUnit)
+    emit('add-unit', newUnit)
+    resetForm()
+  }
+}
+
+const loadUnitData = (unitId) => {
+  // Load category data based on unitId. This is a placeholder for actual data loading logic.
+  const data = props.unitData.find(unit => unit.id === unitId);
+  if (data) {
+    unit.value = data.unit
+    category.value = data.category
+    defaultUnit.value = data.default
+  }
+}
+
+onMounted(() => {
+  if (props.editingUnitId) {
+    loadUnitData(props.editingUnitId);
+  }
+})
+
+watch(() => props.editingUnitId, (newUnitId) => {
+  if (newUnitId) {
+    loadUnitData(newUnitId);
+  } else {
+    resetForm();
+  }
+})
 </script>
 
 <template>
@@ -113,28 +110,26 @@ const handleDrawerModelValueUpdate = val => {
 
                 <VCol cols="12">
                   <VTextField
-                    v-model="rangeName"
-                    label="Range Name"
+                    v-model="unit"
+                    label="Unit"
                     :rules="[requiredValidator]"
-                    placeholder="XS-XL"
+                    placeholder="mts"
                   />
                 </VCol>
                 
                 <VCol cols="12">
                   <VCombobox
-                    class=""
-                    v-model="chips"
+                    v-model="category"
                     chips
                     clearable
                     multiple
                     closable-chips
                     clear-icon="ri-close-circle-line"
-                    :items="items"
                   />
                 </VCol>
 
                 <VCol cols="12">
-                  <VSwitch label="Set as default"></VSwitch>
+                  <VSwitch v-model="defaultUnit" label="Set as default"></VSwitch>
                 </VCol>
 
               </VRow>
