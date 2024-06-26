@@ -1,9 +1,10 @@
 <!-- eslint-disable @typescript-eslint/quotes -->
-<script setup >
+<script setup lang="ts">
 import { ref } from 'vue'
-import CategoryDrawer from "@/views/setting/stylesDrawers/CategoryDrawer.vue"
+import SamplingDrawer from "@/views/setting/workflowDrawers/samplingDrawer.vue"
 
-const isAddNewCategoryDrawerVisible = ref(false)
+const isAddNewStageDrawerVisible = ref(false)
+const editingStageId = ref<number | null>(null);
 
 const headers = [
   { title: 'Stage Name', key: 'stage', width: '60%', sortable: false, },
@@ -11,11 +12,28 @@ const headers = [
   { title: 'Setting', key: 'setting', sortable: false, },
 ]
 
-const dummyData = ref([
-  { id: 1, stage: 'Category A', default: false },
-  { id: 2, stage: 'Category B', default: true },
-  { id: 3, stage: 'Category C', default: false },
-])
+const stageData = ref([])
+
+const addStage = (newStage) => {
+  if (editingStageId.value !== null) {
+    const index = stageData.value.findIndex(stage => stage.id === editingStageId.value);
+    if (index !== -1) {
+      stageData.value[index] = newStage;
+    }
+  } else {
+    stageData.value.push(newStage);
+  }
+  editingStageId.value = null;
+}
+
+const editStage = (stage) => {
+  editingStageId.value = stage.id;
+  isAddNewStageDrawerVisible.value = true;
+}
+
+const deleteStage = (id) => {
+  stageData.value = stageData.value.filter(stage => stage.id !== id);
+}
 </script>
 
 <template>
@@ -26,7 +44,7 @@ const dummyData = ref([
           <VCardTitle style="padding: 1rem;">Sampling Stages</VCardTitle>
           <VCardSubtitle style="margin-top: -1rem;">Define your sampling workflow stages</VCardSubtitle>
           <VCol class="mx-1">
-            <VDataTable :headers="headers" :items="dummyData" item-value="id" class="text-no-wrap">
+            <VDataTable :headers="headers" :items="stageData" item-value="id" class="text-no-wrap">
               <!-- User -->
               <template #item.stage="{ item }">
                 <div class="d-flex align-center pt-2 pb-3">
@@ -34,11 +52,6 @@ const dummyData = ref([
                     {{ item.stage }}
                   </div>
                 </div>
-              </template>
-
-              <!-- Active -->
-              <template #item.active="{ item }">
-                <VCheckbox v-model="item.active" />
               </template>
 
               <!-- Default -->
@@ -49,15 +62,15 @@ const dummyData = ref([
               <!-- Setting -->
               <template #item.setting="{ item }">
                 <IconBtn size="small">
-                  <VIcon icon="ri-pencil-line" />
+                  <VIcon icon="ri-pencil-line" @click="editStage(item)"/>
                 </IconBtn>
-                <IconBtn size="small" icon="ri-delete-bin-7-line"/>
+                <IconBtn size="small" icon="ri-delete-bin-7-line" @click="deleteStage(item.id)"/>
               </template>
 
               <!-- Bottom -->
               <template #bottom>
                 <div class="d-flex justify-start py-2">
-                  <VBtn variant="outlined" @click="isAddNewCategoryDrawerVisible = !isAddNewCategoryDrawerVisible">
+                  <VBtn variant="outlined" @click="isAddNewStageDrawerVisible = !isAddNewStageDrawerVisible">
                     Add Sampling Stage
                   </VBtn>
                 </div>
@@ -66,13 +79,12 @@ const dummyData = ref([
           </VCol>
         </VCard>
       </VCol>
-      <CategoryDrawer
-        v-model:isDrawerOpen="isAddNewCategoryDrawerVisible"
+      <SamplingDrawer
+        v-model:isDrawerOpen="isAddNewStageDrawerVisible"
+        :editing-stage-id="editingStageId"
+        :stage-data="stageData"
+        @add-stage="addStage"
       />
     </VRow>
   </div>
 </template>
-
-<style lang="scss">
-
-</style>

@@ -419,4 +419,4 @@ const deleteField = (id) => {
   padding: 0.5rem 5px;
   gap: 8px; /* Add some space between the chips */
 }
-</style>: any: any: any: { id: number | null; }: { id: number | null; }: { id: number | null; }: any: any: any
+</style>

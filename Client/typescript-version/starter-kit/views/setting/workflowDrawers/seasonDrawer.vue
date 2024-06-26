@@ -1,73 +1,65 @@
 <script setup>
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
-import { ref, watch, onMounted } from 'vue'
 
 const props = defineProps({
   isDrawerOpen: { type: Boolean, required: true },
-  editingStageId: { type: Number, default: null },
-  stageData: { type: Array, required: true },
+  editingSeasonId: { type: Number, default: null },
+  seasonData: { type: Array, required: true },
 })
 
-const emit = defineEmits(['update:isDrawerOpen', 'add-stage'])
+const emit = defineEmits(['update:isDrawerOpen', 'add-season'])
 
 const handleDrawerModelValueUpdate = val => {
   emit('update:isDrawerOpen', val)
 }
 
 const refVForm = ref()
-const stage = ref('')
-const defaultStage = ref(false)
+const season = ref('')
+const description = ref('')
+const sample = ref([])
 
 const requiredValidator = value => !!value || 'This field is required'
 
-const capitalize = (text) => {
-  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-}
-
-watch(stage, (newValue) => {
-  if (newValue) {
-    stage.value = capitalize(newValue);
-  }
-});
-
 const resetForm = () => {
   refVForm.value?.reset()
-  stage.value = ''
-  defaultStage.value = false
+  season.value = ''
+  description.value = ''
+  sample.value = []
   emit('update:isDrawerOpen', false)
 }
 
 const saveChanges = () => {
   if (refVForm.value?.validate()) {
-    const newStage = {
-      id: props.editingStageId || Date.now(),
-      stage: stage.value,
-      active: true, // assuming you want to set default active state
-      default: defaultStage.value,
+    const newSeason = {
+      id: props.editingSeasonId || Date.now(),
+      season: season.value,
+      description: description.value,
+      sample: sample.value,
     }
-    emit('add-stage', newStage)
+    emit('add-season', newSeason)
     resetForm()
   }
 }
 
-const loadStageData = (stageId) => {
-  // Load stage data based on categoryId. This is a placeholder for actual data loading logic.
-  const data = props.stageData.find(stage => stage.id === stageId);
+const loadSeasonData = (seasonId) => {
+  // Load sample data based on seasonId. This is a placeholder for actual data loading logic.
+  const data = props.seasonData.find(season => season.id === seasonId);
   if (data) {
-    stage.value = data.stage
-    defaultStage.value = data.default
+    season.value = data.season
+    description.value = data.description
+    sample.value = data.sample
   }
 }
 
 onMounted(() => {
-  if (props.editingStageId) {
-    loadStageData(props.editingStageId);
+  if (props.editingSeasonId) {
+    loadSeasonData(props.editingSeasonId);
   }
 })
 
-watch(() => props.editingStageId, (newStageId) => {
-  if (newStageId) {
-    loadStageData(newStageId);
+watch(() => props.editingSeasonId, (newUnitId) => {
+  if (newUnitId) {
+    loadSeasonData(newUnitId);
   } else {
     resetForm();
   }
@@ -109,21 +101,35 @@ watch(() => props.editingStageId, (newStageId) => {
               <VRow class="mt-5">
                 <VCol>
                   <div style="font-size: 21px; font-weight: 600;">
-                    {{ props.editingStageId ? 'Edit' : 'Add' }} Sampling Stage
+                    {{ props.editingSeasonId ? 'Edit' : 'Add' }} a Season
                   </div>
                 </VCol>
 
                 <VCol cols="12">
                   <VTextField
-                    v-model="stage"
-                    label="Stage Name"
+                    v-model="season"
+                    label="Season Name"
                     :rules="[requiredValidator]"
-                    placeholder="Outerwear"
+                    placeholder="Season Name"
                   />
                 </VCol>
-
                 <VCol cols="12">
-                  <VSwitch v-model="defaultStage" label="Set as default"></VSwitch>
+                  <VTextField
+                    v-model="description"
+                    label="Description"
+                    :rules="[requiredValidator]"
+                    placeholder="Description"
+                  />
+                </VCol>
+                <VCol cols="12">
+                  <VCombobox
+                    v-model="sample"
+                    chips
+                    clearable
+                    multiple
+                    closable-chips
+                    clear-icon="ri-close-circle-line"
+                  />
                 </VCol>
               </VRow>
             </VForm>

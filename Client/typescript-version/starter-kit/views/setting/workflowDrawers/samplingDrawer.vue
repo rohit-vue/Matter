@@ -42,7 +42,6 @@ const saveChanges = () => {
     const newStage = {
       id: props.editingStageId || Date.now(),
       stage: stage.value,
-      active: true, // assuming you want to set default active state
       default: defaultStage.value,
     }
     emit('add-stage', newStage)
@@ -51,7 +50,6 @@ const saveChanges = () => {
 }
 
 const loadStageData = (stageId) => {
-  // Load stage data based on categoryId. This is a placeholder for actual data loading logic.
   const data = props.stageData.find(stage => stage.id === stageId);
   if (data) {
     stage.value = data.stage
