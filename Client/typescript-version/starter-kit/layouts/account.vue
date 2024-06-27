@@ -3,7 +3,7 @@
 import { useConfigStore } from '@core/stores/config'
 import { AppContentLayoutNav } from '@layouts/enums'
 import { switchToVerticalNavOnLtOverlayNavBreakpoint } from '@layouts/utils'
-import AccountSidebar from '@/layouts/components/AccountSidebar.vue'zx
+import AccountSidebar from '@/layouts/components/AccountSidebar.vue'
 
 // by this you can prevent switching from vertical to horizontal
 // const DefaultLayoutWithHorizontalNav = defineAsyncComponent(() => import('./components/DefaultLayoutWithHorizontalNav.vue'))

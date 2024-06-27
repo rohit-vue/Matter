@@ -1,24 +1,38 @@
 <!-- eslint-disable @typescript-eslint/quotes -->
-<script setup >
+<script setup lang="ts">
 import { ref } from 'vue'
-import CategoryDrawer from "@/views/setting/stylesDrawers/CategoryDrawer.vue"
+import TaskDrawer from "@/views/setting/workflowDrawers/taskDrawer.vue"
 
-const isAddNewCategoryDrawerVisible = ref(false)
+const isAddNewTaskDrawerVisible = ref(false)
+const editingTaskId = ref<number | null>(null);
 
 const headers = [
   { title: 'Task Name', key: 'task', width: '40%' },
-  { title: 'Description', key: 'description' },
+  { title: 'Department', key: 'department' },
   { title: 'Setting', key: 'setting', sortable: false },
 ]
 
-const dummyData = ref([
-  { id: 1, task: 'Status Update', description: 'Product Development' },
-  { id: 2, task: 'Sample Request', description: 'Product Development' },
-  { id: 1, task: 'Review Confirmation', description: 'Logistics' },
-  { id: 2, task: 'Shipment Request', description: 'Product Development' },
-  { id: 3, task: 'Supplier Visit', description: 'Product Development' },
-  { id: 4, task: 'Techpack Update', description: 'Product Development' },
-])
+const taskData = ref([])
+const addTask = (newTask) => {
+  if (editingTaskId.value !== null) {
+    const index = taskData.value.findIndex(task => task.id === editingTaskId.value)
+    if (index !== -1) {
+      taskData.value[index] = newTask;
+    }
+  } else {
+    taskData.value.push(newTask);
+  }
+  editingTaskId.value = null;
+}
+
+const editTask = (task) => {
+  editingTaskId.value = task.id
+  isAddNewTaskDrawerVisible.value = true;
+}
+
+const deleteTask = (id) => {
+  taskData.value = taskData.value.filter(task => task.id !== id);
+}
 </script>
 
 <template>
@@ -29,36 +43,36 @@ const dummyData = ref([
           <VCardTitle style="padding: 1rem;">Tasks Setup</VCardTitle>
           <VCardSubtitle style="margin-top: -1rem;">Define common tasks within your workflow</VCardSubtitle>
           <VCol class="mx-1">
-            <VDataTable :headers="headers" :items="dummyData" item-value="id" class="text-no-wrap billing-history-table">
+            <VDataTable :headers="headers" :items="taskData" item-value="id" class="text-no-wrap billing-history-table">
               <!-- Task -->
               <template #item.task="{ item }">
                 {{ item.task }}
               </template>
 
-              <!-- Check -->
-              <template #item.check="{ item }">
-                {{ item.check }}
-              </template>
-
               <!-- Description -->
-              <template #item.description="{ item }">
-                <VChip>
-                  {{ item.description }}
-                </VChip>
+              <template #item.department="{ item }">
+                <div class="chip-wrapper">
+                  <VChip
+                    v-for="(departmentItem, index) in item.department"
+                    :key="index"
+                  >
+                    {{ departmentItem }}
+                  </VChip>
+                </div>
               </template>
 
               <!-- Setting -->
               <template #item.setting="{ item }">
-                <IconBtn size="small" @click="editUser(item)">
+                <IconBtn size="small" @click="editTask(item)">
                   <VIcon icon="ri-pencil-line" />
                 </IconBtn>
-                <IconBtn size="small" icon="ri-delete-bin-7-line" @click="deleteUser(item.id)" />
+                <IconBtn size="small" icon="ri-delete-bin-7-line" @click="deleteTask(item.id)" />
               </template>
 
               <!-- Bottom -->
               <template #bottom>
                 <div class="d-flex justify-start py-2">
-                  <VBtn variant="outlined" @click="isAddNewUnitDrawerVisible = !isAddNewUnitDrawerVisible">
+                  <VBtn variant="outlined" @click="isAddNewTaskDrawerVisible = !isAddNewTaskDrawerVisible">
                     Add Task Type
                   </VBtn>
                 </div>
@@ -67,8 +81,11 @@ const dummyData = ref([
           </VCol>
         </VCard>
       </VCol>
-      <CategoryDrawer
-        v-model:isDrawerOpen="isAddNewCategoryDrawerVisible"
+      <TaskDrawer
+        v-model:isDrawerOpen="isAddNewTaskDrawerVisible"
+        :editing-task-id="editingTaskId"
+        :task-data="taskData"
+        @add-task="addTask"
       />
     </VRow>
   </div>

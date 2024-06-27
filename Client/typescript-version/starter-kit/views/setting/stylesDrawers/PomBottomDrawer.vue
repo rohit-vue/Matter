@@ -3,11 +3,11 @@ import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
 
 const props = defineProps({
   isDrawerOpen: { type: Boolean, required: true },
-  editingTopId: { type: Number, default: null },
-  topData: { type: Array, required: true },
+  editingBottomId: { type: Number, default: null },
+  bottomData: { type: Array, required: true },
 })
 
-const emit = defineEmits(['update:isDrawerOpen', 'add-top'])
+const emit = defineEmits(['update:isDrawerOpen', 'add-bottom'])
 
 const handleDrawerModelValueUpdate = val => {
   emit('update:isDrawerOpen', val)
@@ -41,8 +41,8 @@ const resetForm = () => {
 
 const saveChanges = () => {
   if (refVForm.value?.validate()) {
-    const newTop= {
-      id: props.editingTopId || Date.now(),
+    const newBottom= {
+      id: props.editingBottomId || Date.now(),
       POMId: POMId.value,
       name: name.value,
       description: description.value,
@@ -51,13 +51,13 @@ const saveChanges = () => {
       tolerance: tolerance.value,
       default: defaultMeasure.value,
     }
-    emit('add-top', newTop)
+    emit('add-bottom', newBottom)
     resetForm()
   }
 }
 
-const loadTopData = (taskId) => {
-  const data = props.topData.find(task => task.id === taskId);
+const loadBottomData = (bottomId) => {
+  const data = props.bottomData.find(bottom => bottom.id === bottomId);
   if (data) {
     POMId.value = data.POMId
     name.value = data.name
@@ -70,14 +70,14 @@ const loadTopData = (taskId) => {
 }
 
 onMounted(() => {
-  if (props.editingTopId) {
-    loadTopData(props.editingTopId);
+  if (props.editingBottomId) {
+    loadBottomData(props.editingBottomId);
   }
 })
 
-watch(() => props.editingTopId, (newTopId) => {
-  if (newTopId) {
-    loadTopData(newTopId);
+watch(() => props.editingBottomId, (newBottomId) => {
+  if (newBottomId) {
+    loadBottomData(newBottomId);
   } else {
     resetForm();
   }
@@ -119,7 +119,7 @@ watch(() => props.editingTopId, (newTopId) => {
               <VRow class="mt-5">
                 <VCol>
                   <div style="font-size: 21px; font-weight: 600;">
-                    {{ props.editingTopId ? 'Edit' : 'Add' }} a Point of Measure
+                    {{ props.editingBottomId ? 'Edit' : 'Add' }} a Point of Measure
                   </div>
                 </VCol>
 
