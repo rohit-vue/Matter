@@ -1,22 +1,20 @@
 <script setup>
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
-import { ref, watch, onMounted } from 'vue'
-
 const props = defineProps({
   isDrawerOpen: { type: Boolean, required: true },
-  editingStageId: { type: Number, default: null },
-  stageData: { type: Array, required: true },
+  editingCategoryId: { type: Number, default: null },
+  categoryData: { type: Array, required: true },
 })
 
-const emit = defineEmits(['update:isDrawerOpen', 'add-stage'])
+const emit = defineEmits(['update:isDrawerOpen', 'add-category'])
 
 const handleDrawerModelValueUpdate = val => {
   emit('update:isDrawerOpen', val)
 }
 
 const refVForm = ref()
-const stage = ref('')
-const defaultStage = ref(false)
+const category = ref('')
+const defaultCategory = ref(false)
 
 const requiredValidator = value => !!value || 'This field is required'
 
@@ -24,54 +22,55 @@ const capitalize = (text) => {
   return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 }
 
-watch(stage, (newValue) => {
+watch(category, (newValue) => {
   if (newValue) {
-    stage.value = capitalize(newValue);
+    category.value = capitalize(newValue);
   }
 });
 
 const resetForm = () => {
   refVForm.value?.reset()
-  stage.value = ''
-  defaultStage.value = false
+  category.value = ''
+  defaultCategory.value = false
   emit('update:isDrawerOpen', false)
 }
 
 const saveChanges = () => {
   if (refVForm.value?.validate()) {
-    const newStage = {
-      id: props.editingStageId || Date.now(),
-      stage: stage.value,
+    const newCategory = {
+      id: props.editingCategoryId || Date.now(),
+      category: category.value,
       active: true, // assuming you want to set default active state
-      default: defaultStage.value,
+      default: defaultCategory.value,
     }
-    emit('add-stage', newStage)
+    emit('add-category', newCategory)
     resetForm()
   }
 }
 
-const loadStageData = (stageId) => {
-  // Load stage data based on categoryId. This is a placeholder for actual data loading logic.
-  const data = props.stageData.find(stage => stage.id === stageId);
+const loadUserData = (categoryId) => {
+  // Load category data based on categoryId. This is a placeholder for actual data loading logic.
+  const data = props.categoryData.find(category => category.id === categoryId);
   if (data) {
-    stage.value = data.stage
-    defaultStage.value = data.default
+    category.value = data.category
+    defaultCategory.value = data.default
   }
 }
 
 onMounted(() => {
-  if (props.editingStageId) {
-    loadStageData(props.editingStageId);
+  if (props.editingCategoryId) {
+    loadUserData(props.editingCategoryId);
   }
 })
 
-watch(() => props.editingStageId, (newStageId) => {
-  if (newStageId) {
-    loadStageData(newStageId);
+watch(() => props.editingCategoryId, (newCategoryId) => {
+  if (newCategoryId) {
+    loadUserData(newCategoryId);
   } else {
     resetForm();
   }
 })
+
 </script>
 
 <template>
@@ -109,13 +108,13 @@ watch(() => props.editingStageId, (newStageId) => {
               <VRow class="mt-5">
                 <VCol>
                   <div style="font-size: 21px; font-weight: 600;">
-                    {{ props.editingStageId ? 'Edit' : 'Add' }} Sampling Stage
+                    {{ props.editingCategoryId ? 'Edit' : 'Add' }} Sampling Stage
                   </div>
                 </VCol>
 
                 <VCol cols="12">
                   <VTextField
-                    v-model="stage"
+                    v-model="category"
                     label="Stage Name"
                     :rules="[requiredValidator]"
                     placeholder="Outerwear"
@@ -123,7 +122,7 @@ watch(() => props.editingStageId, (newStageId) => {
                 </VCol>
 
                 <VCol cols="12">
-                  <VSwitch v-model="defaultStage" label="Set as default"></VSwitch>
+                  <VSwitch v-model="defaultCategory" label="Set as default"></VSwitch>
                 </VCol>
               </VRow>
             </VForm>

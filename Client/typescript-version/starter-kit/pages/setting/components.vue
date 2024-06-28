@@ -11,7 +11,6 @@ import FieldDividerDrawer from "@/views/setting/componentDrawer/FieldDividerDraw
 import FieldValueDrawer from "@/views/setting/componentDrawer/FieldValueDrawer.vue"
 import FieldNumberDrawer from "@/views/setting/componentDrawer/FieldNumberDrawer.vue"
 import FieldCheckboxDrawer from "@/views/setting/componentDrawer/FieldCheckboxDrawer.vue"
-import { ref } from 'vue';
 
 const isAddNewCategoryDrawerVisible = ref(false);
 const isAddNewUnitDrawerVisible = ref(false);
@@ -21,8 +20,8 @@ const isAddNewFieldDividerDrawerVisible = ref(false)
 const isAddNewFieldValueDrawerVisible = ref(false)
 const isAddNewFieldNumberDrawerVisible = ref(false)
 const isAddNewFieldCheckboxDrawerVisible = ref(false)
-const fieldType = ref('')
 const isDialogVisible = ref(false)
+const fieldType = ref('')
 
 const typeField = ref<string[]>([
   'Date',

@@ -1,39 +1,42 @@
 <script setup>
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
-
-// const selectedCountry = ref<string | null>(null);
-const typeOfCountry = ref([
-  'United Kingdom',
-  'United States',
-  'China',
-  'Russia',
-]);
+import { ref, watch, onMounted } from 'vue'
 
 const props = defineProps({
-  isDrawerOpen: {
-    type: Boolean,
-    required: true,
-  },
+  isDrawerOpen: { type: Boolean, required: true },
+  editingFieldId: { type: Number, default: null },
+  fieldData: { type: Array, required: true },
 })
 
+const emit = defineEmits(['update:isDrawerOpen', 'add-field'])
 
-const emit = defineEmits([
-  'update:isDrawerOpen',
-  'userData',
-])
+const handleDrawerModelValueUpdate = val => {
+  emit('update:isDrawerOpen', val)
+}
+
+const refVForm = ref()
+const field = ref('')
+const fieldName = ref('')
+// const value = ref([])
+const internal = ref(false)
+
+const requiredValidator = value => !!value || 'This field is required'
+
+const capitalize = (text) => {
+  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+}
+
+watch(fieldName, (newValue) => {
+  if (newValue) {
+    fieldName.value = capitalize(newValue);
+  }
+});
 
 const resetForm = () => {
-  emit('update:isDrawerOpen', false);
-  refVForm.value?.reset();
-};
+  refVForm.value?.reset()
+  emit('update:isDrawerOpen', false)
+}
 
-const refForm = ref()
-const fieldId = ref('')
-const fieldType = ref('')
-const fieldName = ref('')
-const fieldValue = ref('')
-
-// 👉 drawer close
 const closeNavigationDrawer = () => {
   emit('update:isDrawerOpen', false)
   nextTick(() => {
@@ -42,11 +45,46 @@ const closeNavigationDrawer = () => {
   })
 }
 
-const chips = ref(['Casual', 'Street'])
-
-const handleDrawerModelValueUpdate = val => {
-  emit('update:isDrawerOpen', val)
+const saveChanges = () => {
+  if (refVForm.value?.validate()) {
+    const newField = {
+      id: props.editingFieldId || Date.now(),
+      type: 'List of Values',
+      field: field.value,
+      fieldName: fieldName.value,
+      // value: value.value,
+      active: true, // assuming you want to set default active state
+      internal: internal.value,
+    }
+    emit('add-field', newField)
+    resetForm()
+  }
 }
+
+const loadFieldData = (fieldid) => {
+  // Load category data based on fieldid. This is a placeholder for actual data loading logic.
+  const data = props.fieldData.find(field => field.id === fieldid);
+  if (data) {
+    field.value = data.field
+    fieldName.value = data.fieldName
+    // value.value = value
+    internal.value = data.internal
+  }
+}
+
+onMounted(() => {
+  if (props.editingfieldId) {
+    loadFieldData(props.editingfieldId);
+  }
+})
+
+watch(() => props.editingFieldId, (newFieldId) => {
+  if (newFieldId) {
+    loadFieldData(newFieldId);
+  } else {
+    resetForm();
+  }
+})
 </script>
 
 <template>
@@ -84,22 +122,21 @@ const handleDrawerModelValueUpdate = val => {
               <VRow class="mt-5">
                 <VCol>
                   <div style="font-size: 21px; font-weight: 600;">
-                    {{ props.editingUserId ? 'Edit' : 'Add' }} a Custom Field
+                    {{ props.editingFieldId ? 'Edit' : 'Add' }} a Custom Field
                   </div>
                 </VCol>
 
                 <VCol cols="12">
+                  <p>Field Type</p>
                   <VTextField
-                    v-model="fieldType"
-                    label="List of Values"
-                    :rules="[requiredValidator]"
+                    readonly
                     placeholder="List of Values"
                   />
                 </VCol>
 
                 <VCol cols="12">
                   <VTextField
-                    v-model="fieldId"
+                    v-model="field"
                     label="Field ID"
                     :rules="[requiredValidator]"
                     placeholder="CF3"
@@ -117,8 +154,7 @@ const handleDrawerModelValueUpdate = val => {
 
                 <VCol cols="12">
                   <VCombobox
-                    class=""
-                    v-model="chips"
+                    v-model="value"
                     label="Values"
                     chips
                     clearable
@@ -129,7 +165,7 @@ const handleDrawerModelValueUpdate = val => {
                 </VCol>
 
                 <VCol cols="12">
-                  <VSwitch label="Internal Field"></VSwitch>
+                  <VSwitch v-model="internal" label="Internal Field"></VSwitch>
                 </VCol>
                 <VCol cols="12">
                   <VSwitch label="Editable by Supplier"></VSwitch>

@@ -104,7 +104,7 @@ watch(() => props.editingUnitId, (newUnitId) => {
               <VRow class="mt-5">
                 <VCol>
                   <div style="font-size: 21px; font-weight: 600;">
-                    {{ props.editingUserId ? 'Edit' : 'Add' }} a Component Unit
+                    {{ props.editingUnitId ? 'Edit' : 'Add' }} a Component Unit
                   </div>
                 </VCol>
 
