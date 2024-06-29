@@ -23,7 +23,7 @@ export default [
   },
   {
     title: 'Seasons',
-    to: { name: 'second-page' },
+    to: { name: 'seasons' },
     icon: { icon: 'ri-file-text-line' },
   },
   {
