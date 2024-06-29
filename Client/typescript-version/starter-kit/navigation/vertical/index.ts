@@ -12,7 +12,7 @@ export default [
   { heading: 'TASK MANAGEMENT' },
   {
     title: 'Tasks',
-    to: { name: 'second-page' },
+    to: { name: 'tasks' },
     icon: { icon: 'ri-file-text-line' },
   },
   { heading: 'PRODUCT DEVELOPMENT' },

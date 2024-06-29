@@ -14,8 +14,11 @@
           <VExpansionPanels>
             <VExpansionPanel
               style="background-color: #f4f5fa"
-              title="SS25"
             >
+              <VExpansionPanelTitle>
+                <VIcon icon="ri-more-2-line" class="mr-4"/>
+                SS25
+              </VExpansionPanelTitle>
               <VExpansionPanelText>
                 <div class="container">
                   <div class="first-content">
@@ -143,8 +146,11 @@
           <VExpansionPanels class="mt-4">
             <VExpansionPanel
               style="background-color: #f4f5fa"
-              title="AW25"
             >
+              <VExpansionPanelTitle>
+                <VIcon icon="ri-more-2-line" class="mr-4"/>
+                SS25
+              </VExpansionPanelTitle>
               <VExpansionPanelText>
                 <div class="container">
                   <div class="first-content">
