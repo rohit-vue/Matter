@@ -119,7 +119,7 @@ watch(() => props.editingCategoryId, (newCategoryId) => {
                     v-model="category"
                     label="Category Name"
                     :rules="[requiredValidator]"
-                    placeholder="Outerwear"
+                    placeholder="Fabrics"
                   />
                 </VCol>
 

@@ -12,7 +12,7 @@ export default [
   { heading: 'TASK MANAGEMENT' },
   {
     title: 'Tasks',
-    to: { name: 'tasks' },
+    to: { name: 'task-management-tasks' },
     icon: { icon: 'ri-file-text-line' },
   },
   { heading: 'PRODUCT DEVELOPMENT' },
@@ -23,27 +23,27 @@ export default [
   },
   {
     title: 'Seasons',
-    to: { name: 'seasons' },
+    to: { name: 'product-seasons' },
     icon: { icon: 'ri-file-text-line' },
   },
   {
     title: 'Styles',
-    to: { name: 'second-page' },
+    to: { name: 'product-styles' },
+    icon: { icon: 'ri-file-text-line' },
+  },
+  {
+    title: 'Components',
+    to: { name: 'product-components' },
+    icon: { icon: 'ri-file-text-line' },
+  },
+  {
+    title: 'Libraries',
+    to: { name: 'product-library' },
     icon: { icon: 'ri-file-text-line' },
   },
   { heading: 'SUPPLY CHAIN' },
   {
     title: 'Suppliers',
-    to: { name: 'second-page' },
-    icon: { icon: 'ri-file-text-line' },
-  },
-  {
-    title: 'Components',
-    to: { name: 'second-page' },
-    icon: { icon: 'ri-file-text-line' },
-  },
-  {
-    title: 'Libraries',
     to: { name: 'second-page' },
     icon: { icon: 'ri-file-text-line' },
   },

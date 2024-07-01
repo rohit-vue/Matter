@@ -116,7 +116,7 @@ watch(() => props.editingStageId, (newStageId) => {
                     v-model="stage"
                     label="Stage Name"
                     :rules="[requiredValidator]"
-                    placeholder="Outerwear"
+                    placeholder="SMS"
                   />
                 </VCol>
 

@@ -124,7 +124,7 @@ watch(() => props.editingSeasonId, (newUnitId) => {
                 <VCol cols="12">
                   <VCombobox
                     v-model="sample"
-                    label="Sample"
+                    label="Sampling Stages"
                     chips
                     clearable
                     multiple

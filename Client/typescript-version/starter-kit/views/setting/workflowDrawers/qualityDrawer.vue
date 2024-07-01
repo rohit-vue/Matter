@@ -104,7 +104,7 @@ watch(() => props.editingQualityId, (newQualityId) => {
               <VRow class="mt-5">
                 <VCol>
                   <div style="font-size: 21px; font-weight: 600;">
-                    {{ props.editingQualityId ? 'Edit' : 'Add' }} a Season
+                    {{ props.editingQualityId ? 'Edit' : 'Add' }} Quality Control Check
                   </div>
                 </VCol>
 
@@ -119,7 +119,7 @@ watch(() => props.editingQualityId, (newQualityId) => {
                 <VCol cols="12">
                   <VTextField
                     v-model="check"
-                    label="Name"
+                    label="Check"
                     :rules="[requiredValidator]"
                     placeholder="Name"
                   />

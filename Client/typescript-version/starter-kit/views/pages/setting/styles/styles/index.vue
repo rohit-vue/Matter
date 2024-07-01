@@ -164,7 +164,7 @@ const deleteField = (id) => {
           <VCardTitle style="padding: 1rem;">Styles Categories</VCardTitle>
           <VCardSubtitle style="margin-top: -1rem;">Choose where you ship and how much you charge for shipping at checkout.</VCardSubtitle>
           <VCol class="mx-1">
-            <VDataTable :headers="headers" :items="categoryData" item-value="id" class="text-no-wrap billing-history-table">
+            <VDataTable :headers="headers" :items="categoryData" item-value="id" class="text-no-wrap">
               <!-- User -->
               <template #item.category="{ item }">
                 <div class="d-flex align-center pt-2 pb-3">
@@ -318,6 +318,7 @@ const deleteField = (id) => {
                             v-model="fieldType"
                             :rules="[requiredValidator]"
                             :items="typeField"
+                            icon = 'ri-send-plane-fill'
                             label="Field Type"
                             placeholder="Choose your field"
                           />
@@ -328,7 +329,7 @@ const deleteField = (id) => {
 
                     <VCardActions class="mb-2 mr-3">
                       <VSpacer />
-                      <VBtn variant="outlined" @click="isDialogVisible.value = false">
+                      <VBtn variant="outlined" @click="isDialogVisible = false">
                         Cancel
                       </VBtn>
                       <VBtn variant="tonal" class="btn" @click="handleClick">
