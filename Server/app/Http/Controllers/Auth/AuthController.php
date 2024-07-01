@@ -3,53 +3,47 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Models\User;
-use Illuminate\Support\Str;
+use App\Models\Invitation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redirect;
-use Laravel\Socialite\Facades\Socialite;
+use Spatie\Permission\Models\Role;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function showRegistrationForm(Request $request)
+    {
+        $token = $request->query('token');
+        $role = $request->query('role');
+
+        return view('auth.register', compact('token', 'role'));
+    }
+
+    public function register(Request $request)
     {
         $request->validate([
-            'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            'token' => 'required|string',
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'password' => 'required|string|confirmed',
         ]);
 
-        $username = $request->username;
-        $password = $request->password;
+        $invitation = Invitation::where('token', $request->token)->firstOrFail();
 
-        if (Auth::attempt(['username' => $username, 'password' => $password])) {
-
-            return Redirect::route('homepage')->with('success', 'Login successful.');
-        } else {
-            return Redirect::back()->with('error', 'Login failed. Please try again.');
+        if ($invitation->role !== $request->role || $invitation->email !== $request->email) {
+            return response()->json(['message' => 'Invalid invitation data.'], 400);
         }
-    }
 
-    public function redirectToProvider($provider)
-    {
-        return Socialite::driver($provider)->redirect();
-    }
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $invitation->email,
+            'password' => Hash::make($request->password),
+        ]);
 
-    public function handleProviderCallback($provider)
-    {
-        $socialUser = Socialite::driver($provider)->stateless()->user();
+        $user->assignRole($invitation->role);
 
-        $user = User::firstOrCreate(
-            ['email' => $socialUser->getEmail()],
-            [
-                'username' => $socialUser->getName() ?? $socialUser->getNickname(),
-                'password' => Hash::make(Str::random(24)),
-            ]
-        );
+        $invitation->delete();
 
-        Auth::login($user);
-
-        return redirect()->route('homepage');
+        return response()->json(['message' => 'Registration successful.'], 201);
     }
 }

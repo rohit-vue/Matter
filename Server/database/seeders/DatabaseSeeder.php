@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 use App\Models\SettingsWorkflowTasks;
 use App\Models\SettingsWorkflowSeasons;
@@ -17,15 +18,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
         User::factory()->create([
-            'username' => 'testuser',
-            'email' => 'test@example.com',
-            'password' => '12345678',
+            'username' => 'admin',
+            'first_name' => 'admin',
+            'last_name' => 'admin',
+            'email' => 'admin@admin.com',
+            'phone' => '0000000000',
+            'password' => Hash::make('12345678'),
         ]);
 
-        // Insert multiple records into SettingsWorkflowTasks table
+        User::factory(25)->create();
+
+        //* Insert multiple records into SettingsWorkflowTasks table
         SettingsWorkflowTasks::insert([
             [
                 'task_name' => 'Status Update',
