@@ -1,20 +1,23 @@
 <script setup>
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
+import { ref, watch, onMounted } from 'vue'
+
 const props = defineProps({
   isDrawerOpen: { type: Boolean, required: true },
-  editingCategoryId: { type: Number, default: null },
-  categoryData: { type: Array, required: true },
+  editingFieldId: { type: Number, default: null },
+  fieldData: { type: Array, required: true },
 })
 
-const emit = defineEmits(['update:isDrawerOpen', 'add-category'])
+const emit = defineEmits(['update:isDrawerOpen', 'add-field'])
 
 const handleDrawerModelValueUpdate = val => {
   emit('update:isDrawerOpen', val)
 }
 
 const refVForm = ref()
-const category = ref('')
-const defaultCategory = ref(false)
+const field = ref('')
+const fieldName = ref('')
+const internal = ref(false)
 
 const requiredValidator = value => !!value || 'This field is required'
 
@@ -22,55 +25,66 @@ const capitalize = (text) => {
   return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 }
 
-watch(category, (newValue) => {
+watch(fieldName, (newValue) => {
   if (newValue) {
-    category.value = capitalize(newValue);
+    fieldName.value = capitalize(newValue);
   }
 });
 
 const resetForm = () => {
   refVForm.value?.reset()
-  category.value = ''
-  defaultCategory.value = false
+  field.value = ''
+  fieldName.value = ''
+  internal.value = false
   emit('update:isDrawerOpen', false)
+}
+
+const closeNavigationDrawer = () => {
+  emit('update:isDrawerOpen', false)
+  nextTick(() => {
+    refForm.value?.reset()
+    refForm.value?.resetValidation()
+  })
 }
 
 const saveChanges = () => {
   if (refVForm.value?.validate()) {
-    const newCategory = {
-      id: props.editingCategoryId || Date.now(),
-      category: category.value,
+    const newField = {
+      id: props.editingFieldId || Date.now(),
+      type: 'Divider',
+      field: field.value,
+      fieldName: fieldName.value,
       active: true, // assuming you want to set default active state
-      default: defaultCategory.value,
+      internal: internal.value,
     }
-    emit('add-category', newCategory)
+    emit('add-field', newField)
     resetForm()
   }
 }
 
-const loadUserData = (categoryId) => {
-  // Load category data based on categoryId. This is a placeholder for actual data loading logic.
-  const data = props.categoryData.find(category => category.id === categoryId);
+const loadFieldData = (fieldid) => {
+  // Load category data based on fieldid. This is a placeholder for actual data loading logic.
+  const data = props.fieldData.find(field => field.id === fieldid);
   if (data) {
-    category.value = data.category
-    defaultCategory.value = data.default
+    field.value = data.field
+    fieldName.value = data.fieldName
+    internal.value = data.internal
   }
 }
 
 onMounted(() => {
-  if (props.editingCategoryId) {
-    loadUserData(props.editingCategoryId);
+  if (props.editingfieldId) {
+    loadFieldData(props.editingfieldId);
   }
 })
 
-watch(() => props.editingCategoryId, (newCategoryId) => {
-  if (newCategoryId) {
-    loadUserData(newCategoryId);
+watch(() => props.editingFieldId, (newFieldId) => {
+  if (newFieldId) {
+    loadFieldData(newFieldId);
   } else {
     resetForm();
   }
 })
-
 </script>
 
 <template>
@@ -84,7 +98,7 @@ watch(() => props.editingCategoryId, (newCategoryId) => {
     <VRow justify="space-between" align="center" class="mx-2">
       <AppDrawerHeaderSection
         class="mt-6"
-        @cancel="resetForm"
+        @cancel="closeNavigationDrawer"
       />
       <div class="custom-btn">
         <VBtn variant="outlined" @click="resetForm">
@@ -108,22 +122,43 @@ watch(() => props.editingCategoryId, (newCategoryId) => {
               <VRow class="mt-5">
                 <VCol>
                   <div style="font-size: 21px; font-weight: 600;">
-                    {{ props.editingCategoryId ? 'Edit' : 'Add' }} Sampling Stage
+                    {{ props.editingFieldId ? 'Edit' : 'Add' }} a Custom Field
                   </div>
                 </VCol>
 
                 <VCol cols="12">
+                  <p>Field Type</p>
                   <VTextField
-                    v-model="category"
-                    label="Stage Name"
-                    :rules="[requiredValidator]"
-                    placeholder="Outerwear"
+                    readonly
+                    placeholder="Divider"
                   />
                 </VCol>
 
                 <VCol cols="12">
-                  <VSwitch v-model="defaultCategory" label="Set as default"></VSwitch>
+                  <VTextField
+                    v-model="field"
+                    label="Field ID"
+                    :rules="[requiredValidator]"
+                    placeholder="CF3"
+                  />
                 </VCol>
+
+                <VCol cols="12">
+                  <VTextField
+                    v-model="fieldName"
+                    label="Field Name"
+                    :rules="[requiredValidator]"
+                    placeholder="Customs Info"
+                  />
+                </VCol>
+
+                <VCol cols="12">
+                  <VSwitch v-model="internal" label="Internal Field"></VSwitch>
+                </VCol>
+                <VCol cols="12">
+                  <VSwitch label="Editable by Supplier"></VSwitch>
+                </VCol>
+
               </VRow>
             </VForm>
           </VCardText>

@@ -12,19 +12,9 @@ const typeOfRole = ref<string[]>([
 
 // 👉 headers
 const headers = [
-  {
-    title: 'User',
-    key: 'user',
-  },
-  {
-    title: 'Role',
-    key: 'role',
-  },
-  {
-    title: 'Setting',
-    key: 'setting',
-    sortable: false,
-  },
+  { title: 'User', key: 'user' },
+  { title: 'Role', key: 'role' },
+  { title: 'Setting', key: 'setting', sortable: false },
 ]
 
 // Team members data
@@ -79,7 +69,7 @@ definePageMeta({
           <VCardTitle class="mt-2">Team Members</VCardTitle>
           <VCardSubtitle class="pb-2">Manage your existing team and change roles/permissions.</VCardSubtitle>
           <VCol>
-            <VDataTable :headers="headers" :items="teamMembers" item-value="id" class="text-no-wrap billing-history-table">
+            <VDataTableVirtual :headers="headers" :items="teamMembers" height="200" item-value="id" class="text-no-wrap billing-history-table">
               <!-- User -->
               <template #item.user="{ item }">
                 <div class="d-flex align-center pt-2 pb-3">
@@ -115,7 +105,7 @@ definePageMeta({
                   </VBtn>
                 </div>
               </template>
-            </VDataTable>
+            </VDataTableVirtual>
           </VCol>
         </VCard>
       </VCol>

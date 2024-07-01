@@ -1,76 +1,64 @@
 <script setup>
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
+
 const props = defineProps({
   isDrawerOpen: { type: Boolean, required: true },
-  editingCategoryId: { type: Number, default: null },
-  categoryData: { type: Array, required: true },
+  editingTaskId: { type: Number, default: null },
+  taskData: { type: Array, required: true },
 })
 
-const emit = defineEmits(['update:isDrawerOpen', 'add-category'])
+const emit = defineEmits(['update:isDrawerOpen', 'add-task'])
 
 const handleDrawerModelValueUpdate = val => {
   emit('update:isDrawerOpen', val)
 }
 
 const refVForm = ref()
-const category = ref('')
-const defaultCategory = ref(false)
+const task = ref('')
+const department = ref([])
 
 const requiredValidator = value => !!value || 'This field is required'
 
-const capitalize = (text) => {
-  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-}
-
-watch(category, (newValue) => {
-  if (newValue) {
-    category.value = capitalize(newValue);
-  }
-});
-
 const resetForm = () => {
   refVForm.value?.reset()
-  category.value = ''
-  defaultCategory.value = false
+  task.value = ''
+  department.value = []
   emit('update:isDrawerOpen', false)
 }
 
 const saveChanges = () => {
   if (refVForm.value?.validate()) {
-    const newCategory = {
-      id: props.editingCategoryId || Date.now(),
-      category: category.value,
-      active: true, // assuming you want to set default active state
-      default: defaultCategory.value,
+    const newTask= {
+      id: props.editingTaskId || Date.now(),
+      task: task.value,
+      department: department.value,
     }
-    emit('add-category', newCategory)
+    emit('add-task', newTask)
     resetForm()
   }
 }
 
-const loadUserData = (categoryId) => {
-  // Load category data based on categoryId. This is a placeholder for actual data loading logic.
-  const data = props.categoryData.find(category => category.id === categoryId);
+const loadTaskData = (taskId) => {
+  const data = props.taskData.find(task => task.id === taskId);
   if (data) {
-    category.value = data.category
-    defaultCategory.value = data.default
+    task.value = data.task
+    department.value = data.department
   }
 }
 
 onMounted(() => {
-  if (props.editingCategoryId) {
-    loadUserData(props.editingCategoryId);
+  if (props.editingTaskId) {
+    loadTaskData(props.editingTaskId);
   }
 })
 
-watch(() => props.editingCategoryId, (newCategoryId) => {
-  if (newCategoryId) {
-    loadUserData(newCategoryId);
+watch(() => props.editingTaskId, (newTaskId) => {
+  if (newTaskId) {
+    loadTaskData(newTaskId);
   } else {
     resetForm();
   }
 })
-
 </script>
 
 <template>
@@ -108,22 +96,28 @@ watch(() => props.editingCategoryId, (newCategoryId) => {
               <VRow class="mt-5">
                 <VCol>
                   <div style="font-size: 21px; font-weight: 600;">
-                    {{ props.editingCategoryId ? 'Edit' : 'Add' }} Sampling Stage
+                    {{ props.editingTaskId ? 'Edit' : 'Add' }} a Season
                   </div>
                 </VCol>
-
                 <VCol cols="12">
                   <VTextField
-                    v-model="category"
-                    label="Stage Name"
+                    v-model="task"
+                    label="Task Name"
                     :rules="[requiredValidator]"
-                    placeholder="Outerwear"
+                    placeholder="Task Name"
                   />
                 </VCol>
-
                 <VCol cols="12">
-                  <VSwitch v-model="defaultCategory" label="Set as default"></VSwitch>
-                </VCol>
+                  <VCombobox
+                    v-model="department"
+                    label="Department"
+                    chips
+                    clearable
+                    multiple
+                    closable-chips
+                    clear-icon="ri-close-circle-line"
+                  />
+                </VCol>              
               </VRow>
             </VForm>
           </VCardText>

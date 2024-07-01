@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import CompanyDrawer from '@/views/account/CompanyDrawer.vue';
-import { VCardText } from 'vuetify/lib/components/index.mjs';
 
 const isAddLocationDrawerOpen = ref(false);
 const editingLocationId = ref<number | null>(null);
@@ -11,7 +10,7 @@ const addLocation = (newLocation) => {
   if (editingLocationId.value !== null) {
     const index = locationData.value.findIndex(location => location.id === editingLocationId.value);
     if (index !== -1) {
-      locationData.value[index] = newLocation;
+      locationData.value[index] = newLocation;  
     }
   } else {
     locationData.value.push(newLocation);
@@ -39,7 +38,7 @@ definePageMeta({
       <VCol cols="9">
         <!-- Company Info Card -->
         <VCard class="pb-8">
-          <v-card-title class="mt-3">Company Info</v-card-title>
+          <VCardTitle class="mt-3">Company Info</VCardTitle>
           <VRow justify="center" class="mt-1 pl-4 pr-4">
             <VCol cols="12">
               <VTextField
@@ -96,7 +95,7 @@ definePageMeta({
               </VBtn>
             </VCol>
           </VRow>
-          <VDivider class="mx-5 mt-2"/>
+          <VDivider class="mx-5 mt-2" />
           <VCardText v-if="locationData && locationData.length === 0">
             No Data Available
           </VCardText>
@@ -105,8 +104,8 @@ definePageMeta({
               v-for="(item, index) in locationData"
               :key="index"
               :title="item.type"
-              >
-              <VIcon size="20px" icon="ri-delete-bin-7-line" @click="deletelocation(item.id)" style="position: absolute; right: 3rem; top: 0.7rem;"/>
+            >
+              <VIcon size="20px" icon='ri-delete-bin-7-line' @click="deletelocation(item.id)" style="position: absolute; right: 3rem; top: 0.7rem;"/>
               <VIcon size="20px" icon="ri-pencil-line" @click="editLocation(item)" style="position: absolute; right: 5rem; top: 0.7rem;"/>
               <VExpansionPanelText>
                 <p>{{ item.addressLine1 }}</p>
@@ -121,11 +120,11 @@ definePageMeta({
         </VCard>
       </VCol>
       <!-- Company Drawer -->
-      <CompanyDrawer 
-        v-model:is-drawer-open="isAddLocationDrawerOpen" 
-        :editing-location-id="editingLocationId" 
-        :location-data="locationData" 
-        @add-location="addLocation"       
+      <CompanyDrawer
+        v-model:is-drawer-open="isAddLocationDrawerOpen"
+        :editing-location-id="editingLocationId"
+        :location-data="locationData"
+        @add-location="addLocation"
       />
     </VRow>
   </VContainer>

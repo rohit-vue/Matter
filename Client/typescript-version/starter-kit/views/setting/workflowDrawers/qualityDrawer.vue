@@ -1,76 +1,72 @@
 <script setup>
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
+
 const props = defineProps({
   isDrawerOpen: { type: Boolean, required: true },
-  editingCategoryId: { type: Number, default: null },
-  categoryData: { type: Array, required: true },
+  editingQualityId: { type: Number, default: null },
+  qualityData: { type: Array, required: true },
 })
 
-const emit = defineEmits(['update:isDrawerOpen', 'add-category'])
+const emit = defineEmits(['update:isDrawerOpen', 'add-quality'])
 
 const handleDrawerModelValueUpdate = val => {
   emit('update:isDrawerOpen', val)
 }
 
 const refVForm = ref()
-const category = ref('')
-const defaultCategory = ref(false)
+const type = ref('')
+const check = ref('')
+const description = ref('')
+const defaultQuality = ref([])
 
 const requiredValidator = value => !!value || 'This field is required'
 
-const capitalize = (text) => {
-  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-}
-
-watch(category, (newValue) => {
-  if (newValue) {
-    category.value = capitalize(newValue);
-  }
-});
-
 const resetForm = () => {
   refVForm.value?.reset()
-  category.value = ''
-  defaultCategory.value = false
+  type.value = ''
+  check.value = ''
+  description.value = ''
+  defaultQuality.value = false
   emit('update:isDrawerOpen', false)
 }
 
 const saveChanges = () => {
   if (refVForm.value?.validate()) {
-    const newCategory = {
-      id: props.editingCategoryId || Date.now(),
-      category: category.value,
-      active: true, // assuming you want to set default active state
-      default: defaultCategory.value,
+    const newQuality= {
+      id: props.editingQualityId || Date.now(),
+      type: type.value,
+      check: check.value,
+      description: description.value,
+      defaultQuality: defaultQuality.value,
     }
-    emit('add-category', newCategory)
+    emit('add-quality', newQuality)
     resetForm()
   }
 }
 
-const loadUserData = (categoryId) => {
-  // Load category data based on categoryId. This is a placeholder for actual data loading logic.
-  const data = props.categoryData.find(category => category.id === categoryId);
+const loadQualityData = (qualityId) => {
+  const data = props.qualityData.find(quality => quality.id === qualityId);
   if (data) {
-    category.value = data.category
-    defaultCategory.value = data.default
+    type.value = data.type
+    check.value = data.check
+    description.value = data.description
+    defaultQuality.value = data.defaultQuality
   }
 }
 
 onMounted(() => {
-  if (props.editingCategoryId) {
-    loadUserData(props.editingCategoryId);
+  if (props.editingQualityId) {
+    loadQualityData(props.editingQualityId);
   }
 })
 
-watch(() => props.editingCategoryId, (newCategoryId) => {
-  if (newCategoryId) {
-    loadUserData(newCategoryId);
+watch(() => props.editingQualityId, (newQualityId) => {
+  if (newQualityId) {
+    loadQualityData(newQualityId);
   } else {
     resetForm();
   }
 })
-
 </script>
 
 <template>
@@ -108,22 +104,37 @@ watch(() => props.editingCategoryId, (newCategoryId) => {
               <VRow class="mt-5">
                 <VCol>
                   <div style="font-size: 21px; font-weight: 600;">
-                    {{ props.editingCategoryId ? 'Edit' : 'Add' }} Sampling Stage
+                    {{ props.editingQualityId ? 'Edit' : 'Add' }} Quality Control Check
                   </div>
                 </VCol>
 
                 <VCol cols="12">
                   <VTextField
-                    v-model="category"
-                    label="Stage Name"
+                    v-model="type"
+                    label="Type"
                     :rules="[requiredValidator]"
-                    placeholder="Outerwear"
+                    placeholder="Type"
                   />
                 </VCol>
-
                 <VCol cols="12">
-                  <VSwitch v-model="defaultCategory" label="Set as default"></VSwitch>
+                  <VTextField
+                    v-model="check"
+                    label="Check"
+                    :rules="[requiredValidator]"
+                    placeholder="Name"
+                  />
                 </VCol>
+                <VCol cols="12">
+                  <VTextField
+                    v-model="description"
+                    label="Description"
+                    :rules="[requiredValidator]"
+                    placeholder="Description"
+                  />
+                </VCol>
+                <VCol cols="12">
+                  <VSwitch v-model="defaultQuality" label="Set as default"></VSwitch>
+                </VCol>                
               </VRow>
             </VForm>
           </VCardText>

@@ -19,7 +19,7 @@ const props = defineProps({
     default: null,
   },
   teamMembers: {
-    type: Array as PropType<{ id: number; user: { name: string; companyEmail: string }; role: string }[]>,
+    type: Array as PropType<{ id: number; firstName: string; lastName: string; email: string; role: string }[]>,
     required: true,
   },
 })

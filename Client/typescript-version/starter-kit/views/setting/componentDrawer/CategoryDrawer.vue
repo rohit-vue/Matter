@@ -1,72 +1,78 @@
 <script setup>
 import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
+import { ref, watch, onMounted } from 'vue'
 
 const props = defineProps({
-  isDrawerOpen: {
-    type: Boolean,
-    required: true,
-  },
+  isDrawerOpen: { type: Boolean, required: true },
+  editingCategoryId: { type: Number, default: null },
+  categoryData: { type: Array, required: true },
 })
 
-const emit = defineEmits([
-  'update:isDrawerOpen',
-  'userData',
-])
-
-const resetForm = () => {
-  refVForm.value?.reset();
-  emit('update:isDrawerOpen', false);
-};
-
-const isFormValid = ref(false)
-const refForm = ref()
-const fullName = ref('')
-const userName = ref('')
-const email = ref('')
-const company = ref('')
-const country = ref()
-const contact = ref('')
-const role = ref()
-const plan = ref()
-const status = ref()
-
-// 👉 drawer close
-const closeNavigationDrawer = () => {
-  emit('update:isDrawerOpen', false)
-  nextTick(() => {
-    refForm.value?.reset()
-    refForm.value?.resetValidation()
-  })
-}
-
-const onSubmit = () => {
-  refForm.value?.validate().then(({ valid }) => {
-    if (valid) {
-      emit('userData', {
-        id: 0,
-        fullName: fullName.value,
-        company: company.value,
-        role: role.value,
-        username: userName.value,
-        country: country.value,
-        contact: contact.value,
-        email: email.value,
-        currentPlan: plan.value,
-        status: status.value,
-        avatar: '',
-      })
-      emit('update:isDrawerOpen', false)
-      nextTick(() => {
-        refForm.value?.reset()
-        refForm.value?.resetValidation()
-      })
-    }
-  })
-}
+const emit = defineEmits(['update:isDrawerOpen', 'add-category'])
 
 const handleDrawerModelValueUpdate = val => {
   emit('update:isDrawerOpen', val)
 }
+
+const refVForm = ref()
+const category = ref('')
+const defaultCategory = ref(false)
+
+const requiredValidator = value => !!value || 'This field is required'
+
+const capitalize = (text) => {
+  return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+}
+
+watch(category, (newValue) => {
+  if (newValue) {
+    category.value = capitalize(newValue);
+  }
+});
+
+const resetForm = () => {
+  refVForm.value?.reset()
+  category.value = ''
+  defaultCategory.value = false
+  emit('update:isDrawerOpen', false)
+}
+
+const saveChanges = () => {
+  if (refVForm.value?.validate()) {
+    const newCategory = {
+      id: props.editingCategoryId || Date.now(),
+      category: category.value,
+      active: true, // assuming you want to set default active state
+      default: defaultCategory.value,
+    }
+    emit('add-category', newCategory)
+    resetForm()
+  }
+}
+
+const loadUserData = (categoryId) => {
+  // Load category data based on categoryId. This is a placeholder for actual data loading logic.
+  const data = props.categoryData.find(category => category.id === categoryId);
+  if (data) {
+    category.value = data.category
+    defaultCategory.value = data.default
+  }
+}
+
+onMounted(() => {
+  if (props.editingCategoryId) {
+    loadUserData(props.editingCategoryId);
+  }
+})
+
+watch(() => props.editingCategoryId, (newCategoryId) => {
+  if (newCategoryId) {
+    loadUserData(newCategoryId);
+  } else {
+    resetForm();
+  }
+})
+
 </script>
 
 <template>
@@ -104,21 +110,24 @@ const handleDrawerModelValueUpdate = val => {
               <VRow class="mt-5">
                 <VCol>
                   <div style="font-size: 21px; font-weight: 600;">
-                    {{ props.editingUserId ? 'Edit' : 'Add' }} a Component Category
+                    {{ props.editingCategoryId ? 'Edit' : 'Add' }} a Component Category
                   </div>
                 </VCol>
 
                 <VCol cols="12">
                   <VTextField
-                    v-model="categoryName"
+                    v-model="category"
                     label="Category Name"
                     :rules="[requiredValidator]"
-                    placeholder="Outerwear"
+                    placeholder="Fabrics"
                   />
                 </VCol>
 
                 <VCol cols="12">
-                  <VSwitch label="Set as default"></VSwitch>
+                  <VSwitch
+                    v-model="defaultCategory"
+                    label="Set as default"
+                  ></VSwitch>
                 </VCol>
 
               </VRow>
