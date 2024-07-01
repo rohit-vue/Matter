@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\SettingsWorkflowController;
+use App\Http\Controllers\ProductDevelopmentController;
 
 //! Public Routes
 Route::post('login', [UserController::class, 'loginUser'])->name('login');
@@ -17,6 +18,7 @@ Route::post('resetpass/{token}', [PasswordResetController::class, 'reset']);
 Route::group(['middleware' => 'api'], function ($routes) {
     Route::post('refresh', [AuthController::class, 'refresh'])->name('refresh');
     Route::post('logout', [UserController::class, 'logout'])->name('logout');
+    Route::post('update-profile', [UserController::class, 'updateProfile'])->name('update-profile');
 });
 
 //Settings->Webflow
@@ -30,4 +32,5 @@ Route::post('settings/workflow/seasons',[SettingsWorkflowController::class,'seas
 Route::get('settings/workflow/seasons',[SettingsWorkflowController::class,'show_seasons']);
 
 
-
+//Product Development
+Route::apiResource('productdev-seasons', ProductDevelopmentController::class);
